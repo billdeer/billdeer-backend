@@ -4,4 +4,10 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Billdeer.Core\Billdeer.Core.csproj" />
+    <ProjectReference Include="..\Billdeer.DataAccess\Billdeer.DataAccess.csproj" />
+    <ProjectReference Include="..\Billdeer.Entities\Billdeer.Entities.csproj" />
+  </ItemGroup>
+
 </Project>

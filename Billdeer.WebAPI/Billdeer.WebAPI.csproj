@@ -12,4 +12,9 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Billdeer.Business\Billdeer.Business.csproj" />
+    <ProjectReference Include="..\Billdeer.Entities\Billdeer.Entities.csproj" />
+  </ItemGroup>
+
 </Project>
