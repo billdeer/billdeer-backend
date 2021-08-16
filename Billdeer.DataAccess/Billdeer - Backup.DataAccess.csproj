@@ -5,22 +5,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
-<<<<<<< Updated upstream
     <Folder Include="Abstract\" />
   </ItemGroup>
 
   <ItemGroup>
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> master
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.9">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Billdeer.Entities\Billdeer.Entities.csproj" />
   </ItemGroup>
 
 </Project>
