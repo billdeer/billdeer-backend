@@ -4,4 +4,10 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Abstract\" />
+    <Folder Include="ComplexTypes\" />
+    <Folder Include="DTOs\UserDtos\" />
+  </ItemGroup>
+
 </Project>
