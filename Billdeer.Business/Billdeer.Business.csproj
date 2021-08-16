@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Billdeer.Core\Billdeer.Core.csproj" />
     <ProjectReference Include="..\Billdeer.DataAccess\Billdeer.DataAccess.csproj" />
     <ProjectReference Include="..\Billdeer.Entities\Billdeer.Entities.csproj" />
