@@ -10,4 +10,8 @@
     <Folder Include="DTOs\UserDtos\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Billdeer.Core\Billdeer.Core.csproj" />
+  </ItemGroup>
+
 </Project>
