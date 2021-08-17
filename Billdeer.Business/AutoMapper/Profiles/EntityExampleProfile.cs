@@ -45,13 +45,14 @@ namespace Billdeer.Business.AutoMapper.Profiles
                 .ReverseMap();
 
             // UpdateDto'dan Entity'e
-            CreateMap<EntityExampleUpdateDto, EntityExample>()
+            CreateMap<UpdateEntityExampleCommand, EntityExample>()
                 .ForMember(
                     dest => dest.ModifiedDate,
-                    opt => opt.MapFrom(src => DateTime.Now));
+                    opt => opt.MapFrom(src => DateTime.Now))
+                .ReverseMap();
 
             // DeleteDto'dan Entity'e
-            CreateMap<EntityExampleDeleteDto, EntityExample>()
+            CreateMap<DeleteEntityExampleCommand, EntityExample>()
                 .ForMember(
                     dest => dest.DeletedDate,
                     opt => opt.MapFrom(src => DateTime.Now))
