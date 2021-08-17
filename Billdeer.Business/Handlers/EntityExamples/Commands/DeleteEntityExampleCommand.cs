@@ -30,7 +30,7 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
                 var entity = _entityExampleRepository.GetAsync(x => x.Id == request.EntityExampleId);
 
                 if (entity is null)
-                    new Result(ResultStatus.Warning);
+                    return new Result(ResultStatus.Warning);
 
                 _entityExampleRepository.Delete(entity.Result);
                 await _entityExampleRepository.SaveChangesAsync();

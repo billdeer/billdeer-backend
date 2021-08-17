@@ -15,12 +15,12 @@ using System.Threading.Tasks;
 
 namespace Billdeer.Business.Handlers.EntityExamples.Commands
 {
-    public class CreateEntityExampleCommand : IRequest<IResult>
+    public class CreateEntityExampleCommand : IRequest<IDataResult<EntityExampleDto>>
     {
         public string Name { get; set; } // Burada controllerdaki post metodundan gelicek olan propertyler olucak.
         // Aslında bazı dtolara gerek kalmaya bilir ama map işlemi lazım burada da, controllerdan alırken normal entity'e çevirip dbye yollamak gericek.
 
-        private class CreateEntityExampleCommandHandler : IRequestHandler<CreateEntityExampleCommand, IResult>
+        private class CreateEntityExampleCommandHandler : IRequestHandler<CreateEntityExampleCommand, IDataResult<EntityExampleDto>>
         {
             private readonly IEntityExampleRepository _entityExampleRepository;
             private readonly IMapper _mapper;
@@ -31,12 +31,12 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
                 _mapper = mapper;
             }
 
-            public async Task<IResult> Handle(CreateEntityExampleCommand request, CancellationToken cancellationToken)
+            public async Task<IDataResult<EntityExampleDto>> Handle(CreateEntityExampleCommand request, CancellationToken cancellationToken)
             {
                 var entity = await _entityExampleRepository.GetAsync(x => x.Name == request.Name);
 
                 if (entity is not null)
-                    return new Result(ResultStatus.Warning);
+                    return new DataResult<EntityExampleDto>(ResultStatus.Warning);
 
                 var entityMap = _mapper.Map<CreateEntityExampleCommand, EntityExample>(request);
 

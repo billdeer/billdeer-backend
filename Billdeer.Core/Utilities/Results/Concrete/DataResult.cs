@@ -15,6 +15,16 @@ namespace Billdeer.Core.Utilities.Results
             Data = data;
         }
 
+        public DataResult(ResultStatus resultStatus, string message) : base(resultStatus, message)
+        {
+
+        }
+
+        public DataResult(ResultStatus resultStatus) : base(resultStatus)
+        {
+
+        }
+
         public T Data { get; }
     }
 }
