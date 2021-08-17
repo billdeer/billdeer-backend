@@ -1,7 +1,7 @@
 ﻿using Billdeer.Business.Handlers.EntityExamples.Commands;
+using Billdeer.Business.Handlers.EntityExamples.Queries;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Utilities.Results.ComplexTypes;
-using Billdeer.Core.Utilities.Results.Concrete;
 using Billdeer.Entities.DTOs.EntityExampleDtos;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -16,37 +16,28 @@ namespace Billdeer.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EntityExamplesController : ControllerBase
+    public class EntityExamplesController : BaseApiController
     {
         private readonly IMediator _mediator;
 
+        public EntityExamplesController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        [HttpPost]
         public async Task<IActionResult> AddAsync(CreateEntityExampleCommand request)
         {
-            var result = await _mediator.Send(request);
+            //var result = await _mediator.Send(request);
+            //SwitchMethod<EntityExampleDto, IDataResult<EntityExampleDto>>(result, "EntityExamples", "Add");
+            return Ok(await _mediator.Send(request));
+        }
 
-            switch (result.ResultStatus)
-            {
-                case ResultStatus.Warning:
-                    return Ok(new ApiDataResult<EntityExampleDto>
-                    {
-                        HttpStatusCode = HttpStatusCode.OK,
-                        URI = Url.Link("", new { Controller = "EntityExamples", Action = "Add" }),
-                        Message = result.Message,
-                        InternalMessage = null,
-                        Errors = null,
-                        Data = result.Data
-                    });
-                default:
-                    return Ok(new ApiDataResult<EntityExampleDto>
-                    {
-                        HttpStatusCode = HttpStatusCode.OK,
-                        URI = Url.Link("", new { Controller = "EntityExamples", Action = "Add" }),
-                        Message = result.Message,
-                        InternalMessage = null,
-                        Errors = null,
-                        Data = result.Data
-                    });
-            }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var query = new GetEntityExampleQuery() { EntityExampleId = id };
+            return Ok(await _mediator.Send(query));
         }
     }
 }

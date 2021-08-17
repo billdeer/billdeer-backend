@@ -16,7 +16,7 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
     {
         public int EntityExampleId { get; set; }
 
-        private class DeleteEntityExampleCommandHandler : IRequestHandler<DeleteEntityExampleCommand, IResult>
+        public class DeleteEntityExampleCommandHandler : IRequestHandler<DeleteEntityExampleCommand, IResult>
         {
             private readonly IEntityExampleRepository _entityExampleRepository;
 

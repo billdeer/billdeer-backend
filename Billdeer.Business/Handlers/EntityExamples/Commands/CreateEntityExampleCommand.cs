@@ -17,12 +17,11 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
 {
     public class CreateEntityExampleCommand : IRequest<IDataResult<EntityExampleDto>>
     {
-        public string Name { get; set; } // Burada controllerdaki post metodundan gelicek olan propertyler olucak.
-        // Aslında bazı dtolara gerek kalmaya bilir ama map işlemi lazım burada da, controllerdan alırken normal entity'e çevirip dbye yollamak gericek.
+        public string Name { get; set; }
 
-        private class CreateEntityExampleCommandHandler : IRequestHandler<CreateEntityExampleCommand, IDataResult<EntityExampleDto>>
+        public class CreateEntityExampleCommandHandler : IRequestHandler<CreateEntityExampleCommand, IDataResult<EntityExampleDto>>
         {
-            private readonly IEntityExampleRepository _entityExampleRepository;
+            IEntityExampleRepository _entityExampleRepository;
             private readonly IMapper _mapper;
 
             public CreateEntityExampleCommandHandler(IEntityExampleRepository entityExampleRepository, IMapper mapper)

@@ -12,5 +12,6 @@ namespace Billdeer.Core.Utilities.Results
         public string InternalMessage { get; set; }
         public List<string> Errors { get; set; }
         public string URI { get; set; }
+        public object Data { get; set; }
     }
 }
