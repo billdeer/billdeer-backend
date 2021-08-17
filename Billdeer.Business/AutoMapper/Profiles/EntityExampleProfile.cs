@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Billdeer.Business.Handlers.EntityExamples.Commands;
 using Billdeer.Entities.Concrete;
 using Billdeer.Entities.DTOs.EntityExampleDtos;
 using System;
@@ -29,6 +30,18 @@ namespace Billdeer.Business.AutoMapper.Profiles
                     dest => dest.IsDeleted,
                     opt => opt.MapFrom(src => false));
 
+            //:
+            CreateMap<CreateEntityExampleCommand, EntityExample>()
+                .ForMember(
+                    dest => dest.CreatedDate,  // dest: map ettiğimiz EntityExample'ı temsil ediyor.
+                    opt => opt.MapFrom(src => DateTime.Now)) // src: gönderdiğimiz EntityExampleAddDto'yu temsil ediyor ama bi değerini kullanmak zorunda değiliz.
+                .ForMember(
+                    dest => dest.IsActive,
+                    opt => opt.MapFrom(src => true)) // daha Map işlemi yapılırken otomatik olarak IsActive değerini true yapıyoruz.
+                .ForMember(
+                    dest => dest.IsDeleted,
+                    opt => opt.MapFrom(src => false)).ReverseMap();
+
             // UpdateDto'dan Entity'e
             CreateMap<EntityExampleUpdateDto, EntityExample>()
                 .ForMember(
@@ -51,7 +64,7 @@ namespace Billdeer.Business.AutoMapper.Profiles
             CreateMap<EntityExample, EntityExampleDto>()
                 .ForMember(
                     dest => dest.ForeignExamples, // EntityExampleDto'daki ICollection<ForeignExampleDto> listesine denk geliyor.
-                    opt => opt.MapFrom(src => src.ForeignExamples)); // EntityExample'daki ICollection<ForeignExample> listesine denk geliyor.
+                    opt => opt.MapFrom(src => src.ForeignExamples)).ReverseMap(); // EntityExample'daki ICollection<ForeignExample> listesine denk geliyor.
             // Biri Dto listesi biri normal Entity listesi tuttuğu için tipleri farklı. O yüzden AutoMapper otomatik maplemiyor burda belirtmemiz gerekiyor.
 
             // iş kodlarını yazdıkça bunlar anlam kazanıcak kanka.
