@@ -8,7 +8,6 @@ namespace Billdeer.Entities.DTOs.EntityExampleDtos
 {
     public class EntityExampleAddDto
     {
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

@@ -28,9 +28,10 @@ namespace Billdeer.Business.AutoMapper.Profiles
                     opt => opt.MapFrom(src => true)) // daha Map işlemi yapılırken otomatik olarak IsActive değerini true yapıyoruz.
                 .ForMember(
                     dest => dest.IsDeleted,
-                    opt => opt.MapFrom(src => false));
+                    opt => opt.MapFrom(src => false))
+                .ReverseMap();
 
-            //:
+            // Command Mappings
             CreateMap<CreateEntityExampleCommand, EntityExample>()
                 .ForMember(
                     dest => dest.CreatedDate,  // dest: map ettiğimiz EntityExample'ı temsil ediyor.
@@ -40,7 +41,8 @@ namespace Billdeer.Business.AutoMapper.Profiles
                     opt => opt.MapFrom(src => true)) // daha Map işlemi yapılırken otomatik olarak IsActive değerini true yapıyoruz.
                 .ForMember(
                     dest => dest.IsDeleted,
-                    opt => opt.MapFrom(src => false)).ReverseMap();
+                    opt => opt.MapFrom(src => false))
+                .ReverseMap();
 
             // UpdateDto'dan Entity'e
             CreateMap<EntityExampleUpdateDto, EntityExample>()
@@ -58,7 +60,8 @@ namespace Billdeer.Business.AutoMapper.Profiles
                     opt => opt.MapFrom(src => false))
                 .ForMember(
                     dest => dest.IsDeleted,
-                    opt => opt.MapFrom(src => true)); // burda da aynı Add mantığındaki gibi değerlerini değiştiriyoruz.
+                    opt => opt.MapFrom(src => true)) // burda da aynı Add mantığındaki gibi değerlerini değiştiriyoruz.
+                .ReverseMap(); 
 
             // Entity'den GetDto'ya. Veritabanından çektiğimiz Entity'i Dto'ya maplemek için kullanıcaz.
             CreateMap<EntityExample, EntityExampleDto>()
@@ -68,6 +71,8 @@ namespace Billdeer.Business.AutoMapper.Profiles
             // Biri Dto listesi biri normal Entity listesi tuttuğu için tipleri farklı. O yüzden AutoMapper otomatik maplemiyor burda belirtmemiz gerekiyor.
 
             // iş kodlarını yazdıkça bunlar anlam kazanıcak kanka.
+
+
 
         }
     }
