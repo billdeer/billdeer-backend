@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Billdeer.Core.Utilities.Results;
+using Billdeer.Core.Utilities.Results.ComplexTypes;
 using Billdeer.DataAccess.Abstract;
 using MediatR;
 using System;
@@ -29,12 +30,12 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
                 var entity = _entityExampleRepository.GetAsync(x => x.Id == request.EntityExampleId);
 
                 if (entity is null)
-                    new ErrorResult();
+                    new Result(ResultStatus.Warning);
 
                 _entityExampleRepository.Delete(entity.Result);
                 await _entityExampleRepository.SaveChangesAsync();
 
-                return new SuccessResult();
+                return new Result(ResultStatus.Success);
 
             }
         }

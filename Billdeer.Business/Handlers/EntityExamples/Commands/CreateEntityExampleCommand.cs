@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Billdeer.Business.AutoMapper.Profiles;
 using Billdeer.Core.Utilities.Results;
+using Billdeer.Core.Utilities.Results.ComplexTypes;
 using Billdeer.DataAccess.Abstract;
 using Billdeer.Entities.Concrete;
 using Billdeer.Entities.DTOs.EntityExampleDtos;
@@ -14,12 +15,12 @@ using System.Threading.Tasks;
 
 namespace Billdeer.Business.Handlers.EntityExamples.Commands
 {
-    public class CreateEntityExampleCommand : IRequest<IDataResult<EntityExampleDto>>
+    public class CreateEntityExampleCommand : IRequest<IResult>
     {
         public string Name { get; set; } // Burada controllerdaki post metodundan gelicek olan propertyler olucak.
         // Aslında bazı dtolara gerek kalmaya bilir ama map işlemi lazım burada da, controllerdan alırken normal entity'e çevirip dbye yollamak gericek.
 
-        private class CreateEntityExampleCommandHandler : IRequestHandler<CreateEntityExampleCommand, IDataResult<EntityExampleDto>>
+        private class CreateEntityExampleCommandHandler : IRequestHandler<CreateEntityExampleCommand, IResult>
         {
             private readonly IEntityExampleRepository _entityExampleRepository;
             private readonly IMapper _mapper;
@@ -30,12 +31,12 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
                 _mapper = mapper;
             }
 
-            public async Task<IDataResult<EntityExampleDto>> Handle(CreateEntityExampleCommand request, CancellationToken cancellationToken)
+            public async Task<IResult> Handle(CreateEntityExampleCommand request, CancellationToken cancellationToken)
             {
                 var entity = await _entityExampleRepository.GetAsync(x => x.Name == request.Name);
 
                 if (entity is not null)
-                    return new ErrorDataResult<EntityExampleDto>();
+                    return new Result(ResultStatus.Warning);
 
                 var entityMap = _mapper.Map<CreateEntityExampleCommand, EntityExample>(request);
 
@@ -44,7 +45,7 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
 
                 var entityExampleDto = _mapper.Map<EntityExampleDto>(entityExample);
 
-                return new SuccessDataResult<EntityExampleDto>(entityExampleDto);
+                return new DataResult<EntityExampleDto>(entityExampleDto, ResultStatus.Success);
             }
         }
     }
