@@ -1,9 +1,11 @@
 ﻿
+using Billdeer.Core.Utilities.Results.ComplexTypes;
+
 namespace Billdeer.Core.Utilities.Results
 {
     public interface IResult
     {
-        bool Success { get; }
+        ResultStatus ResultStatus { get; }
         string Message { get; }
     }
 }
