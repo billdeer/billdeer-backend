@@ -21,7 +21,7 @@ namespace Billdeer.DataAccess.Concrete.EntityFramework.Contexts
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Integrated Security=True; Database=BilldeerDb; Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            optionsBuilder.UseSqlServer(@"Server = 136.243.190.118\\ALTUDEVSERVER, 7002; Database = Janus; User Id = yusufcorporal; Password = xQ1l2DBsBdoxYVW; Connect Timeout = 30; MultipleActiveResultSets = True;");
         }
     }
 }
