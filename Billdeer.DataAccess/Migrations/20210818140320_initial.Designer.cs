@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Billdeer.DataAccess.Migrations
 {
     [DbContext(typeof(BilldeerDbContext))]
-    [Migration("20210817123830_initialmigration")]
-    partial class initialmigration
+    [Migration("20210818140320_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
