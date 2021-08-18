@@ -15,10 +15,45 @@ using System.Threading.Tasks;
 
 namespace Billdeer.Business.Handlers.EntityExamples.Commands
 {
-    public class CreateEntityExampleCommand : IRequest<IDataResult<EntityExampleDto>>
+    public class CreateEntityExampleCommand : IRequest<IDataResult<EntityExample>>
     {
         public string Name { get; set; }
+            
+        public class CreateEntityExampleCommandHandler : IRequestHandler<CreateEntityExampleCommand, IDataResult<EntityExample>>
+        {
+            IEntityExampleRepository _entityExampleRepository;
 
+            public CreateEntityExampleCommandHandler(IEntityExampleRepository entityExampleRepository)
+            {
+                _entityExampleRepository = entityExampleRepository;
+            }
+
+            public async Task<IDataResult<EntityExample>> Handle(CreateEntityExampleCommand request, CancellationToken cancellationToken)
+            {
+                var entity = await _entityExampleRepository.GetAsync(x => x.Name == request.Name);
+
+                if (entity is not null)
+                    return new DataResult<EntityExample>(ResultStatus.Warning);
+
+                var entityR = new EntityExample
+                {
+                    Name = request.Name,
+                    CreatedDate = DateTime.Now,
+                    IsDeleted = false,
+                    IsActive = true
+                };
+
+                var entityExample = _entityExampleRepository.Add(entityR);
+                await _entityExampleRepository.SaveChangesAsync();
+
+                var entityExampleDto = new EntityExampleDto
+                {
+
+                };
+
+                return new DataResult<EntityExample>(entityExample, ResultStatus.Success);
+            }
+        }
         
     }
 }

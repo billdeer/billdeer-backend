@@ -1,4 +1,5 @@
-﻿using Billdeer.Business.Handlers.EntityExamples.Commands;
+﻿using Autofac;
+using Billdeer.Business.Handlers.EntityExamples.Commands;
 using Billdeer.Business.Handlers.EntityExamples.Queries;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.DataAccess.Abstract;
@@ -16,6 +17,12 @@ namespace Billdeer.Business.Extentions
         {
             //var assm = Assembly.GetExecutingAssembly();
             //services.AddAutoMapper(assm);
+            //services.AddMediatR(assm);
         }
+        //public static ContainerBuilder AddGenericHandlers(this ContainerBuilder builder)
+        //{
+        //    builder.RegisterGeneric(typeof(CreateEntityExampleCommandHandler)).AsImplementedInterfaces()
+        //    return builder;
+        //}
     }
 }

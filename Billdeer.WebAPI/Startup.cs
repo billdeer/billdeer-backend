@@ -22,10 +22,11 @@ using Billdeer.Business.Handlers.EntityExamples.Commands;
 using Billdeer.Business.Extentions;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.Entities.DTOs.EntityExampleDtos;
+using Billdeer.Business;
 
 namespace Billdeer.WebAPI
 {
-    public class Startup
+    public class Startup : BusinessStartup
     {
         public Startup(IConfiguration configuration)
         {
@@ -38,21 +39,18 @@ namespace Billdeer.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddBusinessRegistration();
+            services.AddScoped<IEntityExampleRepository, EntityExampleRepository>();
+            services.AddDbContext<BilldeerDbContext>();
+            services.AddMediatR(typeof(BusinessStartup).Assembly);
+
+
             services.AddControllers();
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Billdeer.WebAPI", Version = "v1" });
             });
-
-            services.AddAutoMapper(typeof(EntityExampleProfile));
-            //services.AddBusinessRegistration();
-            services.AddTransient(typeof(IRequestHandler<CreateEntityExampleCommand, IDataResult<EntityExampleDto>>), typeof(CreateEntityExampleCommandHandler));
-            services.AddMediatR(typeof(Startup));
-            services.AddTransient<IEntityExampleRepository, EntityExampleRepository>();
-
-            services.AddDbContext<BilldeerDbContext>();
-
 
         }
 

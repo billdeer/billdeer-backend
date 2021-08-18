@@ -2,6 +2,7 @@
 using Billdeer.Business.Handlers.EntityExamples.Queries;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Utilities.Results.ComplexTypes;
+using Billdeer.Entities.Concrete;
 using Billdeer.Entities.DTOs.EntityExampleDtos;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -28,19 +29,16 @@ namespace Billdeer.WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromBody] CreateEntityExampleCommand request)
         {
-            var result = await _mediator.Send(new CreateEntityExampleCommand
-            {
-                Name = request.Name
-            });
-            //SwitchMethod<EntityExampleDto, IDataResult<EntityExampleDto>>(result, "EntityExamples", "Add");
-            return Ok(await _mediator.Send(result));
+            var result = await _mediator.Send(request);
+            return SwitchMethod<EntityExample, IDataResult<EntityExample>>(result, "EntityExamples", "Add");
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> Get(int id)
         {
             var query = new GetEntityExampleQuery() { EntityExampleId = id };
-            return Ok(await _mediator.Send(query));
+            var result = await _mediator.Send(query);
+            return SwitchMethod<EntityExample, IDataResult<EntityExample>>(result, "EntityExamples", "Get");
         }
     }
 }

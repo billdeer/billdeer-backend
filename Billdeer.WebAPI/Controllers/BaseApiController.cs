@@ -35,7 +35,7 @@ namespace Billdeer.WebAPI.Controllers
             return Ok(new ApiResult
             {
                 HttpStatusCode = HttpStatusCode.OK,
-                URI = Url.Link("", new { Controller = controllerName, Action = actionName }),
+                URL = Url.Link("", new { Controller = controllerName, Action = actionName }),
                 Message = result.Message,
                 InternalMessage = null,
                 Errors = null,
@@ -49,7 +49,7 @@ namespace Billdeer.WebAPI.Controllers
             return BadRequest(new ApiResult
             {
                 HttpStatusCode = HttpStatusCode.BadRequest,
-                URI = Url.Link("", new { Controller = controllerName, Action = actionName }),
+                URL = Url.Link("", new { Controller = controllerName, Action = actionName }),
                 Message = result.Message,
                 InternalMessage = null,
                 Errors = null,
@@ -57,6 +57,5 @@ namespace Billdeer.WebAPI.Controllers
             });
         }
     }
-    
 }
 

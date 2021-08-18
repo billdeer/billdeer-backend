@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Billdeer.Business.Handlers.EntityExamples.Commands;
 using Billdeer.DataAccess.Abstract;
 using Billdeer.DataAccess.Concrete.EntityFramework;
 using MediatR;
