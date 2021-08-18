@@ -39,13 +39,16 @@ namespace Billdeer.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddControllers();
+            services.AddOptions();
             services.AddScoped<IEntityExampleRepository, EntityExampleRepository>();
             services.AddDbContext<BilldeerDbContext>();
+
+            // AutoMapper ve MediatR BusinessStartup kurulduðunda oraya taþýnacak.
+            services.AddAutoMapper(typeof(BusinessStartup).Assembly);
             services.AddMediatR(typeof(BusinessStartup).Assembly);
 
 
-            services.AddControllers();
 
             services.AddSwaggerGen(c =>
             {

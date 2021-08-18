@@ -31,6 +31,7 @@ namespace Billdeer.WebAPI.Controllers
         {
             var result = await _mediator.Send(request);
             return SwitchMethod<EntityExampleDto, IDataResult<EntityExampleDto>>(result, "EntityExamples", "Add");
+            //return Ok(await _mediator.Send(request));
         }
 
         [HttpGet("{id}")]

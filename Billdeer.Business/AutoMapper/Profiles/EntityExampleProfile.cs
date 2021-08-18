@@ -14,12 +14,7 @@ namespace Billdeer.Business.AutoMapper.Profiles
     {
         public EntityExampleProfile()
         {
-            // Command Mappings
-            CreateMap<EntityExample, CreateEntityExampleCommand>().ReverseMap();
-
-            CreateMap<EntityExample, EntityExampleDto>().ReverseMap();
-
-            CreateMap<EntityExampleAddDto, EntityExample>()
+            CreateMap<CreateEntityExampleCommand, EntityExample>()
                 .ForMember(
                     dest => dest.CreatedDate,  // dest: map ettiğimiz EntityExample'ı temsil ediyor.
                     opt => opt.MapFrom(src => DateTime.Now)) // src: gönderdiğimiz EntityExampleAddDto'yu temsil ediyor ama bi değerini kullanmak zorunda değiliz.
@@ -28,15 +23,13 @@ namespace Billdeer.Business.AutoMapper.Profiles
                     opt => opt.MapFrom(src => true)) // daha Map işlemi yapılırken otomatik olarak IsActive değerini true yapıyoruz.
                 .ForMember(
                     dest => dest.IsDeleted,
-                    opt => opt.MapFrom(src => false))
-                .ReverseMap();
+                    opt => opt.MapFrom(src => false));
 
             // UpdateDto'dan Entity'e
             CreateMap<UpdateEntityExampleCommand, EntityExample>()
                 .ForMember(
                     dest => dest.ModifiedDate,
-                    opt => opt.MapFrom(src => DateTime.Now))
-                .ReverseMap();
+                    opt => opt.MapFrom(src => DateTime.Now));
 
             // DeleteDto'dan Entity'e
             CreateMap<DeleteEntityExampleCommand, EntityExample>()
@@ -48,10 +41,9 @@ namespace Billdeer.Business.AutoMapper.Profiles
                     opt => opt.MapFrom(src => false))
                 .ForMember(
                     dest => dest.IsDeleted,
-                    opt => opt.MapFrom(src => true)) // burda da aynı Add mantığındaki gibi değerlerini değiştiriyoruz.
-                .ReverseMap(); 
+                    opt => opt.MapFrom(src => true)); // burda da aynı Add mantığındaki gibi değerlerini değiştiriyoruz.
 
-
+            CreateMap<EntityExample, EntityExampleDto>();
 
 
         }

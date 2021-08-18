@@ -39,14 +39,6 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
 
                 var entityForDb = _mapper.Map<EntityExample>(request);
 
-                //var entityForDb = new EntityExample
-                //{
-                //    Name = request.Name,
-                //    CreatedDate = DateTime.Now,
-                //    IsDeleted = false,
-                //    IsActive = true
-                //};
-
                 var entityAdded = _entityExampleRepository.Add(entityForDb);
                 await _entityExampleRepository.SaveChangesAsync();
 
