@@ -26,11 +26,14 @@ namespace Billdeer.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddAsync(CreateEntityExampleCommand request)
+        public async Task<IActionResult> AddAsync([FromBody] CreateEntityExampleCommand request)
         {
-            //var result = await _mediator.Send(request);
+            var result = await _mediator.Send(new CreateEntityExampleCommand
+            {
+                Name = request.Name
+            });
             //SwitchMethod<EntityExampleDto, IDataResult<EntityExampleDto>>(result, "EntityExamples", "Add");
-            return Ok(await _mediator.Send(request));
+            return Ok(await _mediator.Send(result));
         }
 
         [HttpGet("{id}")]

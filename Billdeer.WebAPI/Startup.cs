@@ -21,6 +21,7 @@ using Billdeer.DataAccess.Concrete.EntityFramework.Contexts;
 using Billdeer.Business.Handlers.EntityExamples.Commands;
 using Billdeer.Business.Extentions;
 using Billdeer.Core.Utilities.Results;
+using Billdeer.Entities.DTOs.EntityExampleDtos;
 
 namespace Billdeer.WebAPI
 {
@@ -43,9 +44,12 @@ namespace Billdeer.WebAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Billdeer.WebAPI", Version = "v1" });
             });
-            services.AddBusinessRegistration();
-            //services.AddTransient<IEntityExampleRepository, EntityExampleRepository>();
-            //services.AddTransient<IEntityExampleRepository, EntityExampleRepository>();
+
+            services.AddAutoMapper(typeof(EntityExampleProfile));
+            //services.AddBusinessRegistration();
+            services.AddTransient(typeof(IRequestHandler<CreateEntityExampleCommand, IDataResult<EntityExampleDto>>), typeof(CreateEntityExampleCommandHandler));
+            services.AddMediatR(typeof(Startup));
+            services.AddTransient<IEntityExampleRepository, EntityExampleRepository>();
 
             services.AddDbContext<BilldeerDbContext>();
 
