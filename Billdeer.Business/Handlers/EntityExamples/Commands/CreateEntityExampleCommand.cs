@@ -15,43 +15,44 @@ using System.Threading.Tasks;
 
 namespace Billdeer.Business.Handlers.EntityExamples.Commands
 {
-    public class CreateEntityExampleCommand : IRequest<IDataResult<EntityExample>>
+    public class CreateEntityExampleCommand : IRequest<IDataResult<EntityExampleDto>>
     {
         public string Name { get; set; }
             
-        public class CreateEntityExampleCommandHandler : IRequestHandler<CreateEntityExampleCommand, IDataResult<EntityExample>>
+        public class CreateEntityExampleCommandHandler : IRequestHandler<CreateEntityExampleCommand, IDataResult<EntityExampleDto>>
         {
             IEntityExampleRepository _entityExampleRepository;
+            private readonly IMapper _mapper;
 
-            public CreateEntityExampleCommandHandler(IEntityExampleRepository entityExampleRepository)
+            public CreateEntityExampleCommandHandler(IEntityExampleRepository entityExampleRepository, IMapper mapper)
             {
                 _entityExampleRepository = entityExampleRepository;
+                this._mapper = mapper;
             }
 
-            public async Task<IDataResult<EntityExample>> Handle(CreateEntityExampleCommand request, CancellationToken cancellationToken)
+            public async Task<IDataResult<EntityExampleDto>> Handle(CreateEntityExampleCommand request, CancellationToken cancellationToken)
             {
                 var entity = await _entityExampleRepository.GetAsync(x => x.Name == request.Name);
 
                 if (entity is not null)
-                    return new DataResult<EntityExample>(ResultStatus.Warning);
+                    return new DataResult<EntityExampleDto>(ResultStatus.Warning);
 
-                var entityR = new EntityExample
-                {
-                    Name = request.Name,
-                    CreatedDate = DateTime.Now,
-                    IsDeleted = false,
-                    IsActive = true
-                };
+                var entityForDb = _mapper.Map<EntityExample>(request);
 
-                var entityExample = _entityExampleRepository.Add(entityR);
+                //var entityForDb = new EntityExample
+                //{
+                //    Name = request.Name,
+                //    CreatedDate = DateTime.Now,
+                //    IsDeleted = false,
+                //    IsActive = true
+                //};
+
+                var entityAdded = _entityExampleRepository.Add(entityForDb);
                 await _entityExampleRepository.SaveChangesAsync();
 
-                var entityExampleDto = new EntityExampleDto
-                {
+                var entityResponseDto = _mapper.Map<EntityExampleDto>(entityAdded);
 
-                };
-
-                return new DataResult<EntityExample>(entityExample, ResultStatus.Success);
+                return new DataResult<EntityExampleDto>(entityResponseDto, ResultStatus.Success);
             }
         }
         

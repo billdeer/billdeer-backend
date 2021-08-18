@@ -39,7 +39,7 @@ namespace Billdeer.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddBusinessRegistration();
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<IEntityExampleRepository, EntityExampleRepository>();
             services.AddDbContext<BilldeerDbContext>();
             services.AddMediatR(typeof(BusinessStartup).Assembly);

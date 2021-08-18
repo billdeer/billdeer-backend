@@ -30,7 +30,7 @@ namespace Billdeer.WebAPI.Controllers
         public async Task<IActionResult> AddAsync([FromBody] CreateEntityExampleCommand request)
         {
             var result = await _mediator.Send(request);
-            return SwitchMethod<EntityExample, IDataResult<EntityExample>>(result, "EntityExamples", "Add");
+            return SwitchMethod<EntityExampleDto, IDataResult<EntityExampleDto>>(result, "EntityExamples", "Add");
         }
 
         [HttpGet("{id}")]
@@ -38,7 +38,7 @@ namespace Billdeer.WebAPI.Controllers
         {
             var query = new GetEntityExampleQuery() { EntityExampleId = id };
             var result = await _mediator.Send(query);
-            return SwitchMethod<EntityExample, IDataResult<EntityExample>>(result, "EntityExamples", "Get");
+            return SwitchMethod<EntityExampleDto, IDataResult<EntityExampleDto>>(result, "EntityExamples", "Get");
         }
     }
 }

@@ -14,26 +14,30 @@ using System.Threading.Tasks;
 
 namespace Billdeer.Business.Handlers.EntityExamples.Queries
 {
-    public class GetEntityExampleQuery : IRequest<IDataResult<EntityExample>>
+    public class GetEntityExampleQuery : IRequest<IDataResult<EntityExampleDto>>
     {
         public int EntityExampleId { get; set; }
-        public class GetEntityExampleQueryHandler : IRequestHandler<GetEntityExampleQuery, IDataResult<EntityExample>>
+        public class GetEntityExampleQueryHandler : IRequestHandler<GetEntityExampleQuery, IDataResult<EntityExampleDto>>
         {
             private readonly IEntityExampleRepository _entityExampleRepository;
+            private IMapper _mapper;
 
-            public GetEntityExampleQueryHandler(IEntityExampleRepository entityExampleRepository)
+            public GetEntityExampleQueryHandler(IEntityExampleRepository entityExampleRepository, IMapper mapper)
             {
                 _entityExampleRepository = entityExampleRepository;
+                _mapper = mapper;
             }
 
-            public async Task<IDataResult<EntityExample>> Handle(GetEntityExampleQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<EntityExampleDto>> Handle(GetEntityExampleQuery request, CancellationToken cancellationToken)
             {
                 var entity = await _entityExampleRepository.GetAsync(ee => ee.Id == request.EntityExampleId);
 
                 if (entity is null)
-                    return new DataResult<EntityExample>(ResultStatus.Warning);
+                    return new DataResult<EntityExampleDto>(ResultStatus.Warning);
 
-                return new DataResult<EntityExample>(entity, ResultStatus.Success);
+                var entityDto = _mapper.Map<EntityExample, EntityExampleDto>(entity);
+
+                return new DataResult<EntityExampleDto>(entityDto, ResultStatus.Success);
             }
         }
     }
