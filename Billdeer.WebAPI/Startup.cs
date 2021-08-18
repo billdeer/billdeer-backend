@@ -36,12 +36,6 @@ namespace Billdeer.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddBusinessRegistration();
-            //services.AddTransient<IEntityExampleRepository, EntityExampleRepository>();
-            //services.AddTransient<IEntityExampleRepository, EntityExampleRepository>();
-
-            services.AddDbContext<BilldeerDbContext>();
-
 
             services.AddControllers();
 
@@ -49,6 +43,12 @@ namespace Billdeer.WebAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Billdeer.WebAPI", Version = "v1" });
             });
+            services.AddBusinessRegistration();
+            //services.AddTransient<IEntityExampleRepository, EntityExampleRepository>();
+            //services.AddTransient<IEntityExampleRepository, EntityExampleRepository>();
+
+            services.AddDbContext<BilldeerDbContext>();
+
 
         }
 
