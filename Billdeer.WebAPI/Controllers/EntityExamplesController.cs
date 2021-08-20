@@ -41,5 +41,19 @@ namespace Billdeer.WebAPI.Controllers
             var result = await _mediator.Send(query);
             return SwitchMethod<EntityExampleDto, IDataResult<EntityExampleDto>>(result, "EntityExamples", "Get");
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync([FromBody] UpdateEntityExampleCommand request)
+        {
+            var result = await _mediator.Send(request);
+            return SwitchMethod<EntityExampleDto, IDataResult<EntityExampleDto>>(result, "EntityExamples", "Update");
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAsync([FromBody] DeleteEntityExampleCommand request)
+        {
+            var result = await _mediator.Send(request);
+            return SwitchMethod<IResult>(result, "EntityExamples", "Delete");
+        }
     }
 }

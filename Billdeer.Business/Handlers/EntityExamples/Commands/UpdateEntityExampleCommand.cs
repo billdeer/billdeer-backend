@@ -14,39 +14,39 @@ using System.Threading.Tasks;
 
 namespace Billdeer.Business.Handlers.EntityExamples.Commands
 {
-    public class UpdateEntityExampleCommand : IRequest<IDataResult<EntityExample>>
+    public class UpdateEntityExampleCommand : IRequest<IDataResult<EntityExampleDto>>
     {
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public class UpdateEntityExampleCommandHandler : IRequestHandler<UpdateEntityExampleCommand, IDataResult<EntityExample>>
+        public class UpdateEntityExampleCommandHandler : IRequestHandler<UpdateEntityExampleCommand, IDataResult<EntityExampleDto>>
         {
             private readonly IEntityExampleRepository _entityExampleRepository;
+            private readonly IMapper _mapper;
 
-            public UpdateEntityExampleCommandHandler(IEntityExampleRepository entityExampleRepository)
+            public UpdateEntityExampleCommandHandler(IEntityExampleRepository entityExampleRepository, IMapper mapper)
             {
                 _entityExampleRepository = entityExampleRepository;
+                _mapper = mapper;
             }
 
-            public async Task<IDataResult<EntityExample>> Handle(UpdateEntityExampleCommand request, CancellationToken cancellationToken)
+            public async Task<IDataResult<EntityExampleDto>> Handle(UpdateEntityExampleCommand request, CancellationToken cancellationToken)
             {
                 var entityExample = await _entityExampleRepository.GetAsync(x => x.Id == request.Id);
 
                 if (entityExample is null)
                 {
-                    return new DataResult<EntityExample>(ResultStatus.Warning);
+                    return new DataResult<EntityExampleDto>(ResultStatus.Warning);
                 }
 
-                var updatedEntityExample = new EntityExample
-                {
-                    Id = request.Id,
-                    Name = request.Name
-                };
+                var updatedEntityExample = _mapper.Map<UpdateEntityExampleCommand, EntityExample>(request, entityExample);
 
-                _entityExampleRepository.Update(updatedEntityExample);
+                var entityEntityResponse = _entityExampleRepository.Update(updatedEntityExample);
                 await _entityExampleRepository.SaveChangesAsync();
 
-                return new DataResult<EntityExample>(updatedEntityExample, ResultStatus.Success);
+                var entityExampleDto = _mapper.Map<EntityExampleDto>(entityEntityResponse);
+
+                return new DataResult<EntityExampleDto>(entityExampleDto, ResultStatus.Success);
             }
         }
     }
