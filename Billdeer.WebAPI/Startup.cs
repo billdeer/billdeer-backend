@@ -21,6 +21,7 @@ using Billdeer.DataAccess.Concrete.EntityFramework.Contexts;
 using Billdeer.Business.Handlers.EntityExamples.Commands;
 using Billdeer.Business.Extentions;
 using Billdeer.Core.Utilities.Results;
+using Billdeer.Core.Extensions;
 using Billdeer.Entities.DTOs.EntityExampleDtos;
 using Billdeer.Business;
 
@@ -70,6 +71,8 @@ namespace Billdeer.WebAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCostumExceptionHandler();
 
             app.UseAuthorization();
 
