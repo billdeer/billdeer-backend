@@ -31,7 +31,6 @@ namespace Billdeer.WebAPI.Controllers
         {
             var result = await _mediator.Send(request);
             return SwitchMethod<EntityExampleDto, IDataResult<EntityExampleDto>>(result, "EntityExamples", "Add");
-            //return Ok(await _mediator.Send(request));
         }
 
         [HttpGet("{id}")]
@@ -53,7 +52,7 @@ namespace Billdeer.WebAPI.Controllers
         public async Task<IActionResult> DeleteAsync([FromBody] DeleteEntityExampleCommand request)
         {
             var result = await _mediator.Send(request);
-            return SwitchMethod<IResult>(result, "EntityExamples", "Delete");
+            return SwitchMethod(result, "EntityExamples", "Delete");
         }
     }
 }

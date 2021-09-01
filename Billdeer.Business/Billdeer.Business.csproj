@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.2.0" />
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.0" />
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
@@ -15,6 +17,10 @@
     <ProjectReference Include="..\Billdeer.Core\Billdeer.Core.csproj" />
     <ProjectReference Include="..\Billdeer.DataAccess\Billdeer.DataAccess.csproj" />
     <ProjectReference Include="..\Billdeer.Entities\Billdeer.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Constants\" />
   </ItemGroup>
 
 </Project>

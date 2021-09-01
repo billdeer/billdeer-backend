@@ -56,9 +56,9 @@ namespace Billdeer.WebAPI.Controllers
             switch (result.ResultStatus)
             {
                 case ResultStatus.Warning:
-                    return Warning<TResult>(result, controllerName, actionName);
+                    return Warning(result, controllerName, actionName);
                 default:
-                    return Success<TResult>(result, controllerName, actionName);
+                    return Success(result, controllerName, actionName);
             }
         }
 

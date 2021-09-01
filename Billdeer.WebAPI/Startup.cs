@@ -42,7 +42,6 @@ namespace Billdeer.WebAPI
 
             services.AddControllers();
             services.AddOptions();
-            services.AddScoped<IEntityExampleRepository, EntityExampleRepository>();
             services.AddDbContext<BilldeerDbContext>();
 
             // AutoMapper ve MediatR BusinessStartup kurulduðunda oraya taþýnacak.
