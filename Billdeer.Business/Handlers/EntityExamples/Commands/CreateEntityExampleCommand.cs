@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Billdeer.Business.AutoMapper.Profiles;
+using Billdeer.Business.Handlers.EntityExamples.ValidationRules.FluentValidation;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Utilities.Results.ComplexTypes;
 using Billdeer.DataAccess.Abstract;
 using Billdeer.Entities.Concrete;
 using Billdeer.Entities.DTOs.EntityExampleDtos;
+using FluentValidation;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -32,6 +34,14 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
 
             public async Task<IDataResult<EntityExampleDto>> Handle(CreateEntityExampleCommand request, CancellationToken cancellationToken)
             {
+                var context = new ValidationContext<CreateEntityExampleCommand>(request);
+                CreateEntityExampleValidator validationRules = new CreateEntityExampleValidator();
+                var result = validationRules.Validate(context);
+                if (!result.IsValid)
+                {
+                    throw new ValidationException(result.Errors);
+                }
+
                 var entity = await _entityExampleRepository.GetAsync(x => x.Name == request.Name);
 
                 if (entity is not null)
