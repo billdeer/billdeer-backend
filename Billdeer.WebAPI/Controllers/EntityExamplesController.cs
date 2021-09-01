@@ -19,39 +19,41 @@ namespace Billdeer.WebAPI.Controllers
     [ApiController]
     public class EntityExamplesController : BaseApiController
     {
-        private readonly IMediator _mediator;
-
-        public EntityExamplesController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddAsync([FromBody] CreateEntityExampleCommand request)
-        {
-            var result = await _mediator.Send(request);
-            return SwitchMethod<EntityExampleDto, IDataResult<EntityExampleDto>>(result, "EntityExamples", "Add");
-        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             var query = new GetEntityExampleQuery() { EntityExampleId = id };
-            var result = await _mediator.Send(query);
+            var result = await Mediator.Send(query);
             return SwitchMethod<EntityExampleDto, IDataResult<EntityExampleDto>>(result, "EntityExamples", "Get");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var query = new GetEntityExamplesQuery();
+            var result = await Mediator.Send(query);
+            return SwitchMethod<IEnumerable<EntityExample>, IDataResult<IEnumerable<EntityExample>>>(result, "EntityExamples", "GetAll");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddAsync([FromBody] CreateEntityExampleCommand request)
+        {
+            var result = await Mediator.Send(request);
+            return SwitchMethod<EntityExampleDto, IDataResult<EntityExampleDto>>(result, "EntityExamples", "Add");
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateAsync([FromBody] UpdateEntityExampleCommand request)
         {
-            var result = await _mediator.Send(request);
+            var result = await Mediator.Send(request);
             return SwitchMethod<EntityExampleDto, IDataResult<EntityExampleDto>>(result, "EntityExamples", "Update");
         }
 
         [HttpDelete]
         public async Task<IActionResult> DeleteAsync([FromBody] DeleteEntityExampleCommand request)
         {
-            var result = await _mediator.Send(request);
+            var result = await Mediator.Send(request);
             return SwitchMethod(result, "EntityExamples", "Delete");
         }
     }

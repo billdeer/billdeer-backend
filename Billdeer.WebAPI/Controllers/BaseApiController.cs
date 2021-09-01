@@ -1,14 +1,10 @@
-﻿using Billdeer.Core.Entities.Abstract;
-using Billdeer.Core.Utilities.Results;
+﻿using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Utilities.Results.ComplexTypes;
-using Billdeer.Entities.DTOs.EntityExampleDtos;
+using Microsoft.Extensions.DependencyInjection;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace Billdeer.WebAPI.Controllers
 {
@@ -16,6 +12,10 @@ namespace Billdeer.WebAPI.Controllers
     [ApiController]
     public class BaseApiController : ControllerBase
     {
+        private IMediator _mediator;
+
+        protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+
         /// <summary>
         /// Which will be used when data is returned.
         /// </summary>
