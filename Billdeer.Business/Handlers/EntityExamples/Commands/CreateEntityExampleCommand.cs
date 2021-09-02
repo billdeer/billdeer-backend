@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Billdeer.Business.AutoMapper.Profiles;
+using Billdeer.Business.BusinessAspects.Autofac;
 using Billdeer.Business.Handlers.EntityExamples.ValidationRules.FluentValidation;
 using Billdeer.Core.Aspects.Autofac.Validation;
 using Billdeer.Core.CrossCuttingConcerns.Validation;
@@ -34,7 +35,8 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
                 this._mapper = mapper;
             }
 
-            [ValidationAspect(typeof(CreateEntityExampleValidator), Priority = 1)]
+            [SecuredOperation("entityexample.add", Priority = 1)]
+            [ValidationAspect(typeof(CreateEntityExampleValidator), Priority = 2)]
             public async Task<IDataResult<EntityExampleDto>> Handle(CreateEntityExampleCommand request, CancellationToken cancellationToken)
             {
                 var entity = await _entityExampleRepository.GetAsync(x => x.Name == request.Name);

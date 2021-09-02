@@ -12,10 +12,10 @@ namespace Billdeer.DataAccess.Concrete.EntityFramework.Contexts
 {
     public class BilldeerDbContext : DbContext
     {
-        public DbSet<EntityExample> Examples { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<OperationClaim> OperationClaims { get; set; }
-
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Integrated Security=True; Database=BilldeerDb; Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new EntityExampleEntityConfig());
@@ -23,10 +23,10 @@ namespace Billdeer.DataAccess.Concrete.EntityFramework.Contexts
             modelBuilder.ApplyConfiguration(new OperationClaimEntityConfiguration());
             base.OnModelCreating(modelBuilder);
         }
+        public DbSet<EntityExample> Examples { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<OperationClaim> OperationClaims { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Integrated Security=True; Database=BilldeerDb; Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-        }
+
     }
 }
