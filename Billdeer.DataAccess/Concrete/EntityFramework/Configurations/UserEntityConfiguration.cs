@@ -16,8 +16,9 @@ namespace Billdeer.DataAccess.Concrete.EntityFramework.Configurations
             builder.ToTable("Users");
 
             builder.HasKey(x => x.Id);
-
             builder.Property(x => x.FirstName).IsRequired().HasMaxLength(100);
+            builder.Property(x => x.Email).HasMaxLength(50);
+            builder.Property(x => x.Status).IsRequired();
 
         }
     }
