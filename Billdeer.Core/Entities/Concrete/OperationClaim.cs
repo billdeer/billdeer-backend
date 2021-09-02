@@ -6,11 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Billdeer.Entities.Concrete
+namespace Billdeer.Core.Entities.Concrete
 {
-    public class EntityExample : EntityBase<int>, IEntity
+    public class OperationClaim : EntityBase<int>, IEntity
     {
         public string Name { get; set; }
-        public ICollection<ForeignExample> ForeignExamples { get; set; }
+        public string Alias { get; set; }
+        public string Description { get; set; }
+
+        public virtual ICollection<User> Users { get; set; }
     }
 }

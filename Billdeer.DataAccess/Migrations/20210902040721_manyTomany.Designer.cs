@@ -4,14 +4,16 @@ using Billdeer.DataAccess.Concrete.EntityFramework.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Billdeer.DataAccess.Migrations
 {
     [DbContext(typeof(BilldeerDbContext))]
-    partial class BilldeerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210902040721_manyTomany")]
+    partial class manyTomany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,4 +1,5 @@
-﻿using Billdeer.DataAccess.Concrete.EntityFramework.Configurations;
+﻿using Billdeer.Core.Entities.Concrete;
+using Billdeer.DataAccess.Concrete.EntityFramework.Configurations;
 using Billdeer.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,10 +13,14 @@ namespace Billdeer.DataAccess.Concrete.EntityFramework.Contexts
     public class BilldeerDbContext : DbContext
     {
         public DbSet<EntityExample> Examples { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<OperationClaim> OperationClaims { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new EntityExampleEntityConfig());
+            modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new OperationClaimEntityConfiguration());
             base.OnModelCreating(modelBuilder);
         }
 

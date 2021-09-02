@@ -14,6 +14,9 @@ namespace Billdeer.WebAPI.Controllers
     {
         private IMediator _mediator;
 
+        /// <summary>
+        /// If left is null, use right.
+        /// </summary>
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 
         /// <summary>

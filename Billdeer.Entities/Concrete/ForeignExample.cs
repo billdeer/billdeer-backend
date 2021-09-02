@@ -1,4 +1,4 @@
-﻿using Billdeer.Entities.Common;
+﻿using Billdeer.Core.Entities.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;

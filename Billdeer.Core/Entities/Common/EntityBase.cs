@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Billdeer.Entities.Common
+namespace Billdeer.Core.Entities.Common
 {
     public abstract class EntityBase<T>
     {
