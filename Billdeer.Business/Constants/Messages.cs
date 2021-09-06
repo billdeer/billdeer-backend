@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Billdeer.Core.Utilities.Results.ComplexTypes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace Billdeer.Business.Constants
     /// </summary>
     public static class Messages
     {
+        public static string NotFound => "NotFound";
         public static string UserAlreadyExists => "UserAlreadyExists";
         public static string StringLengthMustBeGreaterThanThree => "StringLengthMustBeGreaterThanThree";
         public static string CouldNotBeVerifyCid => "CouldNotBeVerifyCid";

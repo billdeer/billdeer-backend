@@ -19,8 +19,6 @@ namespace Billdeer.Business.Handlers.OperationClaims.Commands
     public class CreateOperationClaimCommand : IRequest<IDataResult<OperationClaim>>
     {
         public string Name { get; set; }
-        public string Alias { get; set; }
-        public string Description { get; set; }
 
         public class CreateOperationClaimCommandHandler : IRequestHandler<CreateOperationClaimCommand, IDataResult<OperationClaim>>
         {
@@ -36,10 +34,8 @@ namespace Billdeer.Business.Handlers.OperationClaims.Commands
             [ValidationAspect(typeof(CreateOperationClaimValidator), Priority = 1)]
             public async Task<IDataResult<OperationClaim>> Handle(CreateOperationClaimCommand request, CancellationToken cancellationToken)
             {
-                var operationClaimExist = await _operationClaimRepository.GetAsync(o => o.Name == request.Name && o.Alias == request.Alias);
-
-                if (operationClaimExist is not null)
-                    return new DataResult<OperationClaim>(operationClaimExist, ResultStatus.Warning, Messages.NameAlreadyExist);
+                if (IsClaimExists(request.Name))
+                    return new DataResult<OperationClaim>(ResultStatus.Warning, Messages.NameAlreadyExist);
 
                 var operationClaimForAdd = _mapper.Map<OperationClaim>(request);
 
@@ -47,6 +43,10 @@ namespace Billdeer.Business.Handlers.OperationClaims.Commands
                 await _operationClaimRepository.SaveChangesAsync();
 
                 return new DataResult<OperationClaim>(operationClaimForAdd, ResultStatus.Success, Messages.Added);
+            }
+            private bool IsClaimExists(string claimName)
+            {
+                return _operationClaimRepository.Queryable(x => x.Name == claimName).Any();
             }
         }
     }
