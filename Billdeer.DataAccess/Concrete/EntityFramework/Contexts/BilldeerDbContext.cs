@@ -14,19 +14,23 @@ namespace Billdeer.DataAccess.Concrete.EntityFramework.Contexts
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Integrated Security=True; Database=BilldeerDb; Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            optionsBuilder.UseNpgsql(@"Host=localhost;Port=5432;Database=Billdeer;Username=postgres;Password=12345;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new EntityExampleEntityConfig());
-            modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new OperationClaimEntityConfiguration());
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(BilldeerDbContext).Assembly);
         }
         public DbSet<EntityExample> Examples { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<OperationClaim> OperationClaims { get; set; }
-
+        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
+        //{
+        //  "email": "mehmetkaya@billdeer.com",
+        //  "password": "123Kaya123#",
+        //  "firstName": "Mehmet",
+        //  "lastName": "Kaya",
+        //  "username": "mehmetkaya"
+        //}
 
     }
 }

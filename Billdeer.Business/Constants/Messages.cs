@@ -11,6 +11,7 @@ namespace Billdeer.Business.Constants
     /// </summary>
     public static class Messages
     {
+        public static string UserAlreadyExists => "UserAlreadyExists";
         public static string StringLengthMustBeGreaterThanThree => "StringLengthMustBeGreaterThanThree";
         public static string CouldNotBeVerifyCid => "CouldNotBeVerifyCid";
         public static string VerifyCid => "VerifyCid";

@@ -19,11 +19,8 @@ namespace Billdeer.Core.Entities.Concrete
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
 
-        /// <summary>
-        /// This property will be used for BAN etc situations.
-        /// </summary>
         public bool Status { get; set; }
 
-        public virtual ICollection<OperationClaim> OperationClaims { get; set; }
+        public virtual ICollection<UserOperationClaim> UserOperationClaims { get; set; }
     }
 }

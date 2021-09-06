@@ -3,15 +3,17 @@ using System;
 using Billdeer.DataAccess.Concrete.EntityFramework.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Billdeer.DataAccess.Migrations
 {
     [DbContext(typeof(BilldeerDbContext))]
-    partial class BilldeerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210906143133_FirstMigrationAdded")]
+    partial class FirstMigrationAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

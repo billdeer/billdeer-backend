@@ -1,29 +1,18 @@
-using Billdeer.Business.AutoMapper.Profiles;
-using Billdeer.DataAccess.Abstract;
-using Billdeer.DataAccess.Concrete.EntityFramework;
 using MediatR;
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using Billdeer.DataAccess.Concrete.EntityFramework.Contexts;
-using Billdeer.Business.Handlers.EntityExamples.Commands;
-using Billdeer.Business.Extentions;
-using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Extensions;
-using Billdeer.Entities.DTOs.EntityExampleDtos;
 using Billdeer.Business;
+using Billdeer.Core.Utilities.Security.JWT;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Billdeer.Core.Utilities.Security.Encryption;
+using Microsoft.EntityFrameworkCore;
 
 namespace Billdeer.WebAPI
 {
@@ -42,6 +31,24 @@ namespace Billdeer.WebAPI
 
             services.AddControllers();
             services.AddOptions();
+
+            var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidIssuer = tokenOptions.Issuer,
+                        ValidAudience = tokenOptions.Audience,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
+                    };
+                });
+
             services.AddDbContext<BilldeerDbContext>();
 
             // AutoMapper ve MediatR BusinessStartup kurulduðunda oraya taþýnacak.
@@ -72,6 +79,8 @@ namespace Billdeer.WebAPI
             app.UseRouting();
 
             app.UseCostumExceptionHandler();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
