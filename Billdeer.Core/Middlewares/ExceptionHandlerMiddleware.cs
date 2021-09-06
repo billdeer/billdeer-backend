@@ -49,20 +49,20 @@ namespace Billdeer.Core.Middlewares
                 message = e.Message;
                 httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             }
-            //else if (e.GetType() == typeof(UnauthorizedAccessException))
-            //{
-            //    message = e.Message;
-            //    httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-            //}
-            //else if (e.GetType() == typeof(SecurityException))
-            //{
-            //    message = e.Message;
-            //    httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-            //}
-            //else
-            //{
-            //    message = ExceptionMessage.InternalServerError;
-            //}
+            else if (e.GetType() == typeof(UnauthorizedAccessException))
+            {
+                message = e.Message;
+                httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            }
+            else if (e.GetType() == typeof(SecurityException))
+            {
+                message = e.Message;
+                httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            }
+            else
+            {
+                message = ExceptionMessage.InternalServerError;
+            }
 
             //await httpContext.Response.WriteAsync(message);
             await httpContext.Response.WriteAsync(new ErrorDetails

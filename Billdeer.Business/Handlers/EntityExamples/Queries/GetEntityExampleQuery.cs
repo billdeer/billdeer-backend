@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Billdeer.Business.BusinessAspects.Autofac;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Utilities.Results.ComplexTypes;
 using Billdeer.DataAccess.Abstract;
@@ -28,6 +29,7 @@ namespace Billdeer.Business.Handlers.EntityExamples.Queries
                 _mapper = mapper;
             }
 
+            [SecuredOperation("master")]
             public async Task<IDataResult<EntityExampleDto>> Handle(GetEntityExampleQuery request, CancellationToken cancellationToken)
             {
                 var entity = await _entityExampleRepository.GetAsync(ee => ee.Id == request.EntityExampleId);

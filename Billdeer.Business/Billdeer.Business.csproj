@@ -23,11 +23,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Handlers\Users\Commands\" />
+    <Folder Include="Handlers\Users\Queries\" />
+    <Folder Include="Handlers\Users\ValidationRules\" />
     <Folder Include="Handlers\UserOperationClaims\Commands\" />
     <Folder Include="Handlers\UserOperationClaims\Queries\" />
     <Folder Include="Handlers\UserOperationClaims\ValidationRules\" />
-    <Folder Include="Handlers\OperationClaims\ValidationRules\" />
-    <Folder Include="Handlers\OperationClaims\Queries\" />
   </ItemGroup>
 
 </Project>

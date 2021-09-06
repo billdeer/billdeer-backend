@@ -28,7 +28,7 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
                 this._mapper = mapper;
             }
 
-            [SecuredOperation("master,entityexample.add", Priority = 1)]
+            [SecuredOperation("master", Priority = 1)]
             [ValidationAspect(typeof(CreateEntityExampleValidator), Priority = 2)]
             public async Task<IDataResult<EntityExampleDto>> Handle(CreateEntityExampleCommand request, CancellationToken cancellationToken)
             {

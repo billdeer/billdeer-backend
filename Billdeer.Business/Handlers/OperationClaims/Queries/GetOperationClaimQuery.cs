@@ -30,11 +30,13 @@ namespace Billdeer.Business.Handlers.OperationClaims.Queries
             {
 
                 if (!IsClaimExists(request.OperationClaimId))
-                   return new DataResult<OperationClaim>(ResultStatus.Warning, Messages.NotFound);
+                {
+                    return new DataResult<OperationClaim>(ResultStatus.Warning, Messages.NotFound);
+                }
 
                 var result = await _operationClaimRepository.GetAsync(o => o.Id == request.OperationClaimId);
 
-                return new DataResult<OperationClaim>(result, ResultStatus.Warning, Messages.NotFound);
+                return new DataResult<OperationClaim>(result, ResultStatus.Success, Messages.NotFound);
             }
 
             private bool IsClaimExists(int claimId)

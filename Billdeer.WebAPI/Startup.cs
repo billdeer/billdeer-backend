@@ -13,6 +13,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Billdeer.Core.Utilities.Security.Encryption;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using Billdeer.Core.Utilities.IoC;
+using Billdeer.Core.DependencyResolvers;
 
 namespace Billdeer.WebAPI
 {
@@ -48,6 +51,11 @@ namespace Billdeer.WebAPI
                         IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                     };
                 });
+
+            services.AddDependencyResolvers(new ICoreModule[]
+            {
+                new CoreModule(),
+            });
 
             services.AddDbContext<BilldeerDbContext>();
 

@@ -14,8 +14,6 @@ namespace Billdeer.Business.Handlers.OperationClaims.ValidationRules
         public CreateOperationClaimValidator()
         {
             RuleFor(x => x.Name).MaximumLength(50);
-            RuleFor(x => x.Alias).MaximumLength(50);
-            RuleFor(x => x.Description).MaximumLength(100);
         }
     }
 }
