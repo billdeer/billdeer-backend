@@ -1,4 +1,6 @@
-﻿using Billdeer.Core.Utilities.IoC;
+﻿using Billdeer.Core.CrossCuttingConcerns.Caching;
+using Billdeer.Core.CrossCuttingConcerns.Caching.Microsoft;
+using Billdeer.Core.Utilities.IoC;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -13,7 +15,9 @@ namespace Billdeer.Core.DependencyResolvers
     {
         public void Load(IServiceCollection serviceCollection)
         {
+            serviceCollection.AddMemoryCache();
             serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            serviceCollection.AddSingleton<ICacheManager, MemoryCacheManager>();
         }
     }
 }

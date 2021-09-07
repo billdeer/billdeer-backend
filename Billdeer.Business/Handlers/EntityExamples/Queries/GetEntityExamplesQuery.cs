@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Billdeer.Core.Aspects.Autofac.Caching;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Utilities.Results.ComplexTypes;
 using Billdeer.DataAccess.Abstract;
@@ -27,6 +28,7 @@ namespace Billdeer.Business.Handlers.EntityExamples.Queries
                 _mapper = mapper;
             }
 
+            [CacheAspect(60)]
             public async Task<IDataResult<IEnumerable<EntityExample>>> Handle(GetEntityExamplesQuery request, CancellationToken cancellationToken)
             {
                 var entity = await _entityExampleRepository.GetListAsync();
