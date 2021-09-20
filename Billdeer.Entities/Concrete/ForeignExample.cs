@@ -1,4 +1,5 @@
 ﻿using Billdeer.Core.Entities.Common;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;

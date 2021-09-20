@@ -1,4 +1,6 @@
 ﻿using Billdeer.Business.Constants;
+using Billdeer.Core.Aspects.Autofac.Logging;
+using Billdeer.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Utilities.Results.ComplexTypes;
 using Billdeer.Core.Utilities.Security.Hashing;
@@ -31,7 +33,7 @@ namespace Billdeer.Business.Handlers.Authorizations.Queries
                 _tokenHelper = tokenHelper;
             }
 
-            //[LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<AccessToken>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
             {
                 var user = await _userRepository.GetAsync(u => u.Email == request.Email && u.Status);

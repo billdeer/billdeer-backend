@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Billdeer.Core.Aspects.Autofac.Logging;
+using Billdeer.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Utilities.Results.ComplexTypes;
 using Billdeer.DataAccess.Abstract;
@@ -30,6 +32,7 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
                 _mapper = mapper;
             }
 
+            [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<EntityExampleDto>> Handle(UpdateEntityExampleCommand request, CancellationToken cancellationToken)
             {
                 var entityExample = await _entityExampleRepository.GetAsync(x => x.Id == request.Id);

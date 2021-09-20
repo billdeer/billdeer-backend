@@ -2,7 +2,9 @@
 using Billdeer.Business.BusinessAspects.Autofac;
 using Billdeer.Business.Handlers.EntityExamples.ValidationRules.FluentValidation;
 using Billdeer.Core.Aspects.Autofac.Caching;
+using Billdeer.Core.Aspects.Autofac.Logging;
 using Billdeer.Core.Aspects.Autofac.Validation;
+using Billdeer.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Utilities.Results.ComplexTypes;
 using Billdeer.DataAccess.Abstract;
@@ -32,6 +34,7 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
             [ValidationAspect(typeof(CreateEntityExampleValidator), Priority = 1)]
             [RemoveCacheAspect("Get")]
             [SecuredOperation("master", Priority = 1)]
+            [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<EntityExampleDto>> Handle(CreateEntityExampleCommand request, CancellationToken cancellationToken)
             {
                 var entity = await _entityExampleRepository.GetAsync(x => x.Name == request.Name);

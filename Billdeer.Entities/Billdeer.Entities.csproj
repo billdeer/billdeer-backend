@@ -5,8 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Abstract\" />
-    <Folder Include="ComplexTypes\" />
+    <Compile Remove="Abstract\**" />
+    <Compile Remove="ComplexTypes\**" />
+    <EmbeddedResource Remove="Abstract\**" />
+    <EmbeddedResource Remove="ComplexTypes\**" />
+    <None Remove="Abstract\**" />
+    <None Remove="ComplexTypes\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="DTOs\UserDtos\" />
   </ItemGroup>
 

@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Billdeer.Core.Utilities.IoC;
 using Billdeer.Core.DependencyResolvers;
+using Billdeer.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 
 namespace Billdeer.WebAPI
 {
@@ -52,6 +53,7 @@ namespace Billdeer.WebAPI
                     };
                 });
 
+
             services.AddDependencyResolvers(new ICoreModule[]
             {
                 new CoreModule(),
@@ -62,7 +64,6 @@ namespace Billdeer.WebAPI
             // AutoMapper ve MediatR BusinessStartup kurulduðunda oraya taþýnacak.
             services.AddAutoMapper(typeof(BusinessStartup).Assembly);
             services.AddMediatR(typeof(BusinessStartup).Assembly);
-
 
 
             services.AddSwaggerGen(c =>

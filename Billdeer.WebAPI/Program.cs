@@ -29,6 +29,11 @@ namespace Billdeer.WebAPI
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+            .ConfigureLogging(configureLogging =>
+            {
+                configureLogging.ClearProviders();
+                configureLogging.SetMinimumLevel(LogLevel.Trace);
+            });
     }
 }

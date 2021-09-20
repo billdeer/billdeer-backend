@@ -1,4 +1,6 @@
-﻿using ServiceStack.Redis;
+﻿using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
+using ServiceStack.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,68 +8,66 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Billdeer.Core.CrossCuttingConcerns.Caching.Redis
-{
+{/// <summary>
+/// Caching for redis. (Not stable and not recommended).
+/// </summary>
     public class RedisCacheManager : ICacheManager
     {
-        private readonly RedisEndpoint _redisEndpoint;
+        private readonly IDistributedCache _distributedCache;
 
-        private void RedisInvoker(Action<RedisClient> redisAction)
+        public RedisCacheManager(IDistributedCache distributedCache)
         {
-            using (var client = new RedisClient(_redisEndpoint))
-            {
-                redisAction.Invoke(client);
-            }
-        }
-
-        public RedisCacheManager()
-        {
-            _redisEndpoint = new RedisEndpoint("localhost", 6379);
+            _distributedCache = distributedCache;
         }
 
         public T Get<T>(string key)
         {
             var result = default(T);
-            RedisInvoker(x => { result = x.Get<T>(key); });
+            _distributedCache.Get(key);
             return result;
         }
 
         public object Get(string key)
         {
-            var result = default(object);
-            RedisInvoker(x => { result = x.Get<object>(key); });
+            var result = JsonConvert.DeserializeObject<object>(_distributedCache.GetString(key));
             return result;
         }
 
         public void Add(string key, object data, int duration)
         {
-            RedisInvoker(x => x.Add(key, data, TimeSpan.FromMinutes(duration)));
+            DistributedCacheEntryOptions options = new DistributedCacheEntryOptions();
+
+            JsonSerializerSettings jss = new JsonSerializerSettings();
+            jss.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            //TODO: Fix json serilazing.
+            var serilazedData = JsonConvert.SerializeObject(data, jss);
+            _distributedCache.SetString(key, serilazedData, options.SetAbsoluteExpiration(TimeSpan.FromMinutes(duration)));
         }
 
         public void Add(string key, object data)
         {
-            RedisInvoker(x => x.Add(key, data));
+            var serilazedData = JsonConvert.SerializeObject(data);
+            _distributedCache.SetString(key, serilazedData);
         }
 
         public bool IsAdd(string key)
         {
-            var isAdded = false;
-            RedisInvoker(x => isAdded = x.ContainsKey(key));
-            return isAdded;
+            return _distributedCache.Get(key) == null ? false : true;
         }
 
         public void Remove(string key)
         {
-            RedisInvoker(x => x.Remove(key));
+            _distributedCache.Remove(key);
         }
 
         public void RemoveByPattern(string pattern)
         {
-            RedisInvoker(x => x.RemoveByPattern(pattern));
+            //RedisInvoker(x => x.RemoveByPattern(pattern));
         }
 
-        public void Clear()
-        {
-            RedisInvoker(x => x.FlushAll());
-        }
+        //public void Clear()
+        //{
+        //    RedisInvoker(x => x.FlushAll());
+        //}
     }
 }

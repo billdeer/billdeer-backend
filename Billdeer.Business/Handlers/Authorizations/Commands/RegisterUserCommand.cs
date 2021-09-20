@@ -1,7 +1,9 @@
 ﻿using Billdeer.Business.BusinessAspects.Autofac;
 using Billdeer.Business.Constants;
 using Billdeer.Business.Handlers.Authorizations.ValidationRules;
+using Billdeer.Core.Aspects.Autofac.Logging;
 using Billdeer.Core.Aspects.Autofac.Validation;
+using Billdeer.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Billdeer.Core.Entities.Concrete;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Utilities.Results.ComplexTypes;
@@ -35,6 +37,7 @@ namespace Billdeer.Business.Handlers.Authorizations.Commands
             }
 
             [ValidationAspect(typeof(RegisterUserValidator), Priority = 1)]
+            [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
             {
                 var userExist = await _userRepository.GetAsync(u => u.Email == request.Email);

@@ -14,12 +14,6 @@ namespace Billdeer.Business.Handlers.EntityExamples.ValidationRules.FluentValida
         public CreateEntityExampleValidator()
         {
             RuleFor(x => x.Name).NotEmpty().MinimumLength(3);
-            RuleFor(x => x.Name).Must(EndWithBD);
-        }
-
-        public static bool EndWithBD(string arg)
-        {
-            return arg.EndsWith("BD");
         }
     }
 
@@ -28,7 +22,6 @@ namespace Billdeer.Business.Handlers.EntityExamples.ValidationRules.FluentValida
         public UpdateEntityExampleValidator()
         {
             RuleFor(x => x.Name).NotEmpty().MinimumLength(3);
-            RuleFor(x => x.Name).Must(CreateEntityExampleValidator.EndWithBD);
         }
     }
 }
