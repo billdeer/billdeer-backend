@@ -32,9 +32,9 @@ namespace Billdeer.Business.Handlers.EntityExamples.Queries
                 _mapper = mapper;
             }
 
-            [SecuredOperation("master", Priority = 1)]
+            //[SecuredOperation("master", Priority = 1)]
             [CacheAspect(60)]
-            [LogAspect(typeof(PostgreSqlLogger))]
+            [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<IEnumerable<EntityExample>>> Handle(GetEntityExamplesQuery request, CancellationToken cancellationToken)
             {
                 var entity = await _entityExampleRepository.GetListAsync();

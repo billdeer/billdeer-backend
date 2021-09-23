@@ -12,6 +12,7 @@ namespace Billdeer.Entities.Concrete
     {
         public string Name { get; set; }
         public int EntityExampleId { get; set; }
+        [JsonIgnore]
         public EntityExample EntityExample { get; set; }
     }
 }

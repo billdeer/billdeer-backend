@@ -33,7 +33,7 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
 
             [ValidationAspect(typeof(CreateEntityExampleValidator), Priority = 1)]
             [RemoveCacheAspect("Get")]
-            [SecuredOperation("master", Priority = 1)]
+            //[SecuredOperation("master", Priority = 1)]
             [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<EntityExampleDto>> Handle(CreateEntityExampleCommand request, CancellationToken cancellationToken)
             {

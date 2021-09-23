@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Http;
 using Billdeer.Core.Utilities.IoC;
 using Billdeer.Core.DependencyResolvers;
 using Billdeer.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using System.Text.Json.Serialization;
 
 namespace Billdeer.WebAPI
 {
@@ -33,7 +34,13 @@ namespace Billdeer.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers()
+
+                            .AddJsonOptions(options =>
+                            {
+                                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                                options.JsonSerializerOptions.IgnoreNullValues = true;
+                            });
             services.AddOptions();
 
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();

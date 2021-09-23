@@ -29,7 +29,7 @@ namespace Billdeer.Core.CrossCuttingConcerns.Caching.Redis
 
         public object Get(string key)
         {
-            var result = JsonConvert.DeserializeObject<object>(_distributedCache.GetString(key));
+            var result = (object)_distributedCache.GetString(key);
             return result;
         }
 
@@ -41,6 +41,8 @@ namespace Billdeer.Core.CrossCuttingConcerns.Caching.Redis
             jss.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             //TODO: Fix json serilazing.
             var serilazedData = JsonConvert.SerializeObject(data, jss);
+            Console.WriteLine(data);
+            Console.WriteLine(serilazedData);
             _distributedCache.SetString(key, serilazedData, options.SetAbsoluteExpiration(TimeSpan.FromMinutes(duration)));
         }
 
