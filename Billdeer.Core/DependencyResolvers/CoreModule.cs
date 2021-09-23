@@ -5,6 +5,7 @@ using Billdeer.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Billdeer.Core.Utilities.IoC;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
 
 namespace Billdeer.Core.DependencyResolvers
 {
@@ -21,6 +22,7 @@ namespace Billdeer.Core.DependencyResolvers
             serviceCollection.AddSingleton<ICacheManager, MemoryCacheManager>();
             serviceCollection.AddTransient<FileLogger>();
             serviceCollection.AddTransient<PostgreSqlLogger>();
+            serviceCollection.AddSingleton<Stopwatch>();
             //serviceCollection.AddSingleton<ICacheManager, RedisCacheManager>();
         }
     }
