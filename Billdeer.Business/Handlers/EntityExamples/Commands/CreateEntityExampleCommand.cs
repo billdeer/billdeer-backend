@@ -22,7 +22,7 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
             
         public class CreateEntityExampleCommandHandler : IRequestHandler<CreateEntityExampleCommand, IDataResult<EntityExampleDto>>
         {
-            IEntityExampleRepository _entityExampleRepository;
+            private readonly IEntityExampleRepository _entityExampleRepository;
             private readonly IMapper _mapper;
 
             public CreateEntityExampleCommandHandler(IEntityExampleRepository entityExampleRepository, IMapper mapper)
