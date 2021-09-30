@@ -1,15 +1,10 @@
 ﻿using Billdeer.Core.Entities.Abstract;
 using Billdeer.Core.Entities.Common;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Billdeer.Core.Entities.Concrete
 {
-    public class User : EntityBase<long>, IEntity
+    public class User : EntityBase
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

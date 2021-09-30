@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Billdeer.Business.Constants;
 using Billdeer.Core.Aspects.Autofac.Logging;
 using Billdeer.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Utilities.Results.ComplexTypes;
+using Billdeer.Core.Utilities.ToolKit;
 using Billdeer.DataAccess.Abstract;
 using Billdeer.Entities.Concrete;
 using Billdeer.Entities.DTOs.EntityExampleDtos;
@@ -18,7 +20,7 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
 {
     public class UpdateEntityExampleCommand : IRequest<IDataResult<EntityExampleDto>>
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
 
         public class UpdateEntityExampleCommandHandler : IRequestHandler<UpdateEntityExampleCommand, IDataResult<EntityExampleDto>>
@@ -37,9 +39,9 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
             {
                 var entityExample = await _entityExampleRepository.GetAsync(x => x.Id == request.Id);
 
-                if (entityExample is null)
+                if (IfEngine.Engine(CheckEntities<IEntityExampleRepository, EntityExample>.Exist(_entityExampleRepository, request.Id)))
                 {
-                    return new DataResult<EntityExampleDto>(ResultStatus.Warning);
+                    return new DataResult<EntityExampleDto>(ResultStatus.Warning, Messages.NotFound);
                 }
 
                 var updatedEntityExample = _mapper.Map<UpdateEntityExampleCommand, EntityExample>(request, entityExample);

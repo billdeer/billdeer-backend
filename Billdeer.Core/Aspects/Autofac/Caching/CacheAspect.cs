@@ -25,6 +25,7 @@ namespace Billdeer.Core.Aspects.Autofac.Caching
         {
             var methodName = string.Format($"{invocation.Method.ReflectedType.FullName}.{invocation.Method.Name}");
             var arguments = invocation.Arguments.ToList();
+            var returnType = invocation.Method.ReturnType;
             var key = $"{methodName}({string.Join(",", arguments.Select(x => x?.ToString() ?? "<Null>"))})";
             if (_cacheManager.IsAdd(key))
             {

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Billdeer.Business.BusinessAspects.Autofac;
+using Billdeer.Business.Constants;
 using Billdeer.Core.Aspects.Autofac.Caching;
 using Billdeer.Core.Aspects.Autofac.Logging;
 using Billdeer.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
@@ -40,7 +41,7 @@ namespace Billdeer.Business.Handlers.EntityExamples.Queries
                 var entity = await _entityExampleRepository.GetAsync(ee => ee.Id == request.EntityExampleId);
 
                 if (entity is null)
-                    return new DataResult<EntityExampleDto>(ResultStatus.Warning);
+                    return new DataResult<EntityExampleDto>(ResultStatus.Warning, Messages.NotFound);
 
                 var entityDto = _mapper.Map<EntityExample, EntityExampleDto>(entity);
 

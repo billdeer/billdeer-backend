@@ -16,15 +16,17 @@ namespace Billdeer.DataAccess.Concrete.EntityFramework.Contexts
         {
             optionsBuilder.UseNpgsql(@"Host=localhost;Port=5432;Database=Billdeer;Username=postgres;Password=12345;");
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(BilldeerDbContext).Assembly);
-        }
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.ApplyConfigurationsFromAssembly(typeof(BilldeerDbContext).Assembly);
+        //}
         public DbSet<EntityExample> Examples { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<OperationClaim> OperationClaims { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
         public DbSet<Log> Logs { get; set; }
+        public DbSet<Advert> Adverts { get; set; }
+
         //{
         //  "email": "mehmetkaya@billdeer.com",
         //  "password": "123Kaya123#",

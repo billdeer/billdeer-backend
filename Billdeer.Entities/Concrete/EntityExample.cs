@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Billdeer.Entities.Concrete
 {
-    public class EntityExample : EntityBase<int>, IEntity
+    public class EntityExample : EntityBase
     {
         public string Name { get; set; }
         public ICollection<ForeignExample> ForeignExamples { get; set; }

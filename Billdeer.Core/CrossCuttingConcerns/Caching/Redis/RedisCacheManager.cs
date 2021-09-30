@@ -22,15 +22,16 @@ namespace Billdeer.Core.CrossCuttingConcerns.Caching.Redis
 
         public T Get<T>(string key)
         {
-            var result = default(T);
-            _distributedCache.Get(key);
-            return result;
+            var data = _distributedCache.GetString(key);
+            var jsonData = JsonConvert.DeserializeObject<T>(data);
+            return jsonData;
         }
 
         public object Get(string key)
         {
-            var result = (object)_distributedCache.GetString(key);
-            return result;
+            var data = _distributedCache.GetString(key);
+            var jsonData = JsonConvert.DeserializeObject(data);
+            return jsonData;
         }
 
         public void Add(string key, object data, int duration)
@@ -40,7 +41,7 @@ namespace Billdeer.Core.CrossCuttingConcerns.Caching.Redis
             JsonSerializerSettings jss = new JsonSerializerSettings();
             jss.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             //TODO: Fix json serilazing.
-            var serilazedData = JsonConvert.SerializeObject(data, jss);
+            var serilazedData = JsonConvert.SerializeObject(data);
             Console.WriteLine(data);
             Console.WriteLine(serilazedData);
             _distributedCache.SetString(key, serilazedData, options.SetAbsoluteExpiration(TimeSpan.FromMinutes(duration)));

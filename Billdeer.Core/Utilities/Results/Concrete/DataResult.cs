@@ -20,7 +20,7 @@ namespace Billdeer.Core.Utilities.Results
 
         }
 
-        public DataResult(ResultStatus resultStatus) : base(resultStatus)
+        public DataResult(ResultStatus resultStatus, object notFound) : base(resultStatus)
         {
 
         }
