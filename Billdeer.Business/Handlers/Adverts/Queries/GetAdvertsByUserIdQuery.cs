@@ -1,5 +1,6 @@
 ﻿using Billdeer.Business.Constants;
 using Billdeer.Core.Entities.Concrete;
+using Billdeer.Core.Utilities.Mail;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Utilities.Results.ComplexTypes;
 using Billdeer.Core.Utilities.ToolKit;
@@ -23,15 +24,21 @@ namespace Billdeer.Business.Handlers.Adverts.Queries
         {
             private readonly IAdvertRepository _advertRepository;
             private readonly IUserRepository _userRepository;
+            private readonly IMailService _mailService;
 
-            public GetAdvertsByUserIdQueryHandler(IAdvertRepository advertRepository, IUserRepository userRepository)
+            public GetAdvertsByUserIdQueryHandler(IAdvertRepository advertRepository, IUserRepository userRepository, IMailService mailService)
             {
-                this._advertRepository = advertRepository;
+                _advertRepository = advertRepository;
                 _userRepository = userRepository;
+                _mailService = mailService;
             }
 
             public async Task<IDataResult<IEnumerable<Advert>>> Handle(GetAdvertsByUserIdQuery request, CancellationToken cancellationToken)
             {
+                var user = await _userRepository.GetAsync(x => x.Id == request.UserId);
+
+                EmailSender.Send(user, _mailService);
+
                 if (!IfEngine.Engine(CheckEntities<IUserRepository, User>.Exist(_userRepository, request.UserId)))
                 {
                     return new DataResult<IEnumerable<Advert>>(ResultStatus.Warning, Messages.UserNotFound);

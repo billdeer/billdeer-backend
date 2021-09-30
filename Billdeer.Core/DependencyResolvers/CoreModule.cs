@@ -3,6 +3,7 @@ using Billdeer.Core.CrossCuttingConcerns.Caching.Microsoft;
 using Billdeer.Core.CrossCuttingConcerns.Caching.Redis;
 using Billdeer.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Billdeer.Core.Utilities.IoC;
+using Billdeer.Core.Utilities.Mail;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics;
@@ -21,6 +22,8 @@ namespace Billdeer.Core.DependencyResolvers
             serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //serviceCollection.AddSingleton<ICacheManager, MemoryCacheManager>();
             serviceCollection.AddSingleton<ICacheManager, RedisCacheManager>();
+            serviceCollection.AddSingleton<IMailService, MailManager>();
+            serviceCollection.AddSingleton<IEmailConfiguration, EmailConfiguration>();
             serviceCollection.AddTransient<FileLogger>();
             serviceCollection.AddTransient<PostgreSqlLogger>();
             serviceCollection.AddSingleton<Stopwatch>();

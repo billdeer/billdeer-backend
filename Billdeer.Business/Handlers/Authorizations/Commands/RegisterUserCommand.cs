@@ -5,6 +5,7 @@ using Billdeer.Core.Aspects.Autofac.Logging;
 using Billdeer.Core.Aspects.Autofac.Validation;
 using Billdeer.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Billdeer.Core.Entities.Concrete;
+using Billdeer.Core.Utilities.Mail;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Utilities.Results.ComplexTypes;
 using Billdeer.Core.Utilities.Security.Hashing;
@@ -30,10 +31,12 @@ namespace Billdeer.Business.Handlers.Authorizations.Commands
         public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, IResult>
         {
             private readonly IUserRepository _userRepository;
+            private readonly IMailService _mailService;
 
-            public RegisterUserCommandHandler(IUserRepository userRepository)
+            public RegisterUserCommandHandler(IUserRepository userRepository, IMailService mailService)
             {
                 _userRepository = userRepository;
+                _mailService = mailService;
             }
 
             [ValidationAspect(typeof(RegisterUserValidator), Priority = 1)]
@@ -58,6 +61,28 @@ namespace Billdeer.Business.Handlers.Authorizations.Commands
                     Username = request.Username,
                     Status = true
                 };
+                ////.
+                //EmailAddress emailAddressTo = new EmailAddress();
+                //emailAddressTo.Name = "eldem";
+                //emailAddressTo.Address = "eldemog.me@gmail.com";
+
+                //var toList = new List<EmailAddress>();
+                //toList.Add(emailAddressTo);
+                ////..
+                //EmailAddress emailAddressFrom = new EmailAddress();
+                //emailAddressFrom.Name = "eldem";
+                //emailAddressFrom.Address = "billdeer@gmail.com";
+
+                //var fromList = new List<EmailAddress>();
+                //fromList.Add(emailAddressFrom);
+                ////...
+                //EmailMessage emailMessage = new EmailMessage();
+                //emailMessage.ToAddresses = toList;
+                //emailMessage.FromAddresses = fromList;
+                //emailMessage.Subject = "Deneme";
+                //emailMessage.Content = "Deneme 1";
+
+                //_mailService.Send(emailMessage);
 
                 _userRepository.Add(user);
                 await _userRepository.SaveChangesAsync();
