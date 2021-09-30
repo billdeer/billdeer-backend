@@ -13,17 +13,17 @@ namespace Billdeer.Core.DependencyResolvers
     {
         public void Load(IServiceCollection serviceCollection)
         {
-            serviceCollection.AddMemoryCache();
-            // serviceCollection.AddStackExchangeRedisCache(options =>
-            //{
-            //    options.Configuration = "localhost:6379";
-            //});
+            //serviceCollection.AddMemoryCache();
+            serviceCollection.AddStackExchangeRedisCache(options =>
+           {
+               options.Configuration = "localhost:6379";
+           });
             serviceCollection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            serviceCollection.AddSingleton<ICacheManager, MemoryCacheManager>();
+            //serviceCollection.AddSingleton<ICacheManager, MemoryCacheManager>();
+            serviceCollection.AddSingleton<ICacheManager, RedisCacheManager>();
             serviceCollection.AddTransient<FileLogger>();
             serviceCollection.AddTransient<PostgreSqlLogger>();
             serviceCollection.AddSingleton<Stopwatch>();
-            //serviceCollection.AddSingleton<ICacheManager, RedisCacheManager>();
         }
     }
 }

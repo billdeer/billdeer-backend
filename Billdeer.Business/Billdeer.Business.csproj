@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Handlers\Adverts\ValidationRules\" />
     <Folder Include="Handlers\Users\Commands\" />
     <Folder Include="Handlers\Users\Queries\" />
     <Folder Include="Handlers\Users\ValidationRules\" />

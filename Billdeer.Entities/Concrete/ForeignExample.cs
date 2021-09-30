@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Billdeer.Entities.Concrete
 {
-    public class ForeignExample : EntityBase<int>
+    public class ForeignExample : EntityBase
     {
         public string Name { get; set; }
-        public int EntityExampleId { get; set; }
+        public long EntityExampleId { get; set; }
         [JsonIgnore]
         public EntityExample EntityExample { get; set; }
     }

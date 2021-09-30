@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Billdeer.Business.BusinessAspects.Autofac;
+using Billdeer.Business.Constants;
 using Billdeer.Business.Handlers.EntityExamples.ValidationRules.FluentValidation;
 using Billdeer.Core.Aspects.Autofac.Caching;
 using Billdeer.Core.Aspects.Autofac.Logging;
@@ -40,7 +41,7 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
                 var entity = await _entityExampleRepository.GetAsync(x => x.Name == request.Name);
 
                 if (entity is not null)
-                    return new DataResult<EntityExampleDto>(ResultStatus.Warning);
+                    return new DataResult<EntityExampleDto>(ResultStatus.Warning, Messages.NotFound);
 
                 var entityForDb = _mapper.Map<EntityExample>(request);
 

@@ -1,22 +1,18 @@
 ﻿using Billdeer.Core.Entities.Abstract;
 using Billdeer.Core.Entities.Common;
+using Billdeer.Core.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Billdeer.Core.Entities.Concrete
+namespace Billdeer.Entities.Concrete
 {
-    public class UserOperationClaim : EntityBase
+    public class Advert : EntityBase
     {
         public long UserId { get; set; }
-        public User User { get; set; }
-
-        public int OperationClaimId { get; set; }
-        public OperationClaim OperationClaim { get; set; }
-
-
-
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

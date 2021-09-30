@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Billdeer.Business.Constants;
 using Billdeer.Core.Aspects.Autofac.Logging;
 using Billdeer.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Billdeer.Core.Utilities.Results;
@@ -38,7 +39,7 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
                 _entityExampleRepository.Delete(entity.Result);
                 await _entityExampleRepository.SaveChangesAsync();
 
-                return new Result(ResultStatus.Success);
+                return new Result(ResultStatus.Success, Messages.Deleted);
 
             }
         }

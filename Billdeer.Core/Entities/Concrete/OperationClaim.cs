@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Billdeer.Core.Entities.Concrete
 {
-    public class OperationClaim : EntityBase<int>, IEntity
+    public class OperationClaim : EntityBase
     {
         public string Name { get; set; }
         public string Alias { get; set; }
