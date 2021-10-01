@@ -1,4 +1,7 @@
 ﻿using Billdeer.Business.Constants;
+using Billdeer.Core.Aspects.Autofac.Caching;
+using Billdeer.Core.Aspects.Autofac.Logging;
+using Billdeer.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Utilities.Results.ComplexTypes;
 using Billdeer.DataAccess.Abstract;
@@ -24,6 +27,8 @@ namespace Billdeer.Business.Handlers.Adverts.Queries
                 this._advertRepository = advertRepository;
             }
 
+            [CacheAspect]
+            [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<IEnumerable<Advert>>> Handle(GetAdvertsQuery request, CancellationToken cancellationToken)
             {
                 var advert = await _advertRepository.GetListAsync(x => x.IsActive == true && x.IsDeleted == false);

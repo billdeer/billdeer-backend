@@ -1,4 +1,7 @@
 ﻿using Billdeer.Business.Constants;
+using Billdeer.Core.Aspects.Autofac.Caching;
+using Billdeer.Core.Aspects.Autofac.Logging;
+using Billdeer.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Billdeer.Core.Entities.Concrete;
 using Billdeer.Core.Utilities.Mail;
 using Billdeer.Core.Utilities.Results;
@@ -33,6 +36,8 @@ namespace Billdeer.Business.Handlers.Adverts.Queries
                 _mailService = mailService;
             }
 
+            [CacheAspect]
+            [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<IEnumerable<Advert>>> Handle(GetAdvertsByUserIdQuery request, CancellationToken cancellationToken)
             {
                 var user = await _userRepository.GetAsync(x => x.Id == request.UserId);

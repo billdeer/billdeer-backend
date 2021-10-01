@@ -1,4 +1,7 @@
 ﻿using Billdeer.Business.Constants;
+using Billdeer.Core.Aspects.Autofac.Caching;
+using Billdeer.Core.Aspects.Autofac.Logging;
+using Billdeer.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Billdeer.Core.Entities.Concrete;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Utilities.Results.ComplexTypes;
@@ -26,6 +29,8 @@ namespace Billdeer.Business.Handlers.Adverts.Queries
                 _userRepository = userRepository;
             }
 
+            [CacheAspect]
+            [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<IEnumerable<Advert>>> Handle(GetDeletedAdvertsByUserIdQuery request, CancellationToken cancellationToken)
             {
                 if (!IfEngine.Engine(CheckEntities<IUserRepository, User>.Exist(_userRepository, request.UserId)))
