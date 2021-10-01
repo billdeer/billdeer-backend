@@ -26,6 +26,8 @@ namespace Billdeer.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
         public DbSet<Log> Logs { get; set; }
         public DbSet<Advert> Adverts { get; set; }
+        public DbSet<AdvertPackage> AdvertPackages{ get; set; }
+        public DbSet<PackageProperty> PackageProperties { get; set; }
 
         //{
         //  "email": "mehmetkaya@billdeer.com",
