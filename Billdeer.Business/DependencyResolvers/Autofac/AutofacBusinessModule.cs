@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Extras.DynamicProxy;
 using Billdeer.Core.Utilities.Interceptors;
+using Billdeer.Core.Utilities.Mail;
 using Billdeer.Core.Utilities.Security.JWT;
 using Billdeer.DataAccess.Abstract;
 using Billdeer.DataAccess.Concrete.EntityFramework;

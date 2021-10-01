@@ -1,4 +1,7 @@
 ﻿using Billdeer.Business.Constants;
+using Billdeer.Core.Aspects.Autofac.Caching;
+using Billdeer.Core.Aspects.Autofac.Logging;
+using Billdeer.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Utilities.Results.ComplexTypes;
 using Billdeer.Core.Utilities.ToolKit;
@@ -27,6 +30,8 @@ namespace Billdeer.Business.Handlers.Adverts.Queries
                 this._advertRepository = advertRepository;
             }
 
+            [CacheAspect]
+            [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<Advert>> Handle(GetAdvertQuery request, CancellationToken cancellationToken)
             {
                 if (!IfEngine.Engine(CheckEntities<IAdvertRepository, Advert>.Exist(_advertRepository, request.Id)))

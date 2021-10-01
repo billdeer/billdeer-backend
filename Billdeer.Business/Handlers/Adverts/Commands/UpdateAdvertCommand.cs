@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
 using Billdeer.Business.Constants;
+using Billdeer.Core.Aspects.Autofac.Caching;
+using Billdeer.Core.Aspects.Autofac.Logging;
+using Billdeer.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Utilities.Results.ComplexTypes;
 using Billdeer.Core.Utilities.ToolKit;
@@ -31,6 +34,9 @@ namespace Billdeer.Business.Handlers.Adverts.Commands
                 _advertRepository = advertRepository;
                 _mapper = mapper;
             }
+
+            [RemoveCacheAspect("Get")]
+            [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<Advert>> Handle(UpdateAdvertCommand request, CancellationToken cancellationToken)
             {
                 if (!IfEngine.Engine(CheckEntities<IAdvertRepository, Advert>.Exist(_advertRepository, request.Id)))
