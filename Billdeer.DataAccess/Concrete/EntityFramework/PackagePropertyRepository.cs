@@ -10,12 +10,11 @@ using System.Threading.Tasks;
 
 namespace Billdeer.DataAccess.Concrete.EntityFramework
 {
-    public class AdvertRepository : EfEntityRepositoryBase<Advert, BilldeerDbContext>, IAdvertRepository
+    public class PackagePropertyRepository : EfEntityRepositoryBase<PackageProperty, BilldeerDbContext>, IPackagePropertyRepository
     {
-        public AdvertRepository(BilldeerDbContext context) : base(context)
+        public PackagePropertyRepository(BilldeerDbContext context) : base(context)
         {
 
         }
-
     }
 }
