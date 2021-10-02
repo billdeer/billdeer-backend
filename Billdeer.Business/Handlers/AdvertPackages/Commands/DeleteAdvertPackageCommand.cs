@@ -6,10 +6,6 @@ using Billdeer.Core.Utilities.ToolKit;
 using Billdeer.DataAccess.Abstract;
 using Billdeer.Entities.Concrete;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,14 +17,14 @@ namespace Billdeer.Business.Handlers.AdvertPackages.Commands
 
         public class DeleteAdvertPackageCommandHandler : IRequestHandler<DeleteAdvertPackageCommand, IResult>
         {
-                private readonly IAdvertPackageRepository _advertPackageRepository;
-                private readonly IMapper _mapper;
+            private readonly IAdvertPackageRepository _advertPackageRepository;
+            private readonly IMapper _mapper;
 
-                public DeleteAdvertPackageCommandHandler(IAdvertPackageRepository advertPackageRepository, IMapper mapper)
-                {
-                    _advertPackageRepository = advertPackageRepository;
-                    _mapper = mapper;
-                }
+            public DeleteAdvertPackageCommandHandler(IAdvertPackageRepository advertPackageRepository, IMapper mapper)
+            {
+                _advertPackageRepository = advertPackageRepository;
+                _mapper = mapper;
+            }
             public async Task<IResult> Handle(DeleteAdvertPackageCommand request, CancellationToken cancellationToken)
             {
                 if (!IfEngine.Engine(CheckEntities<IAdvertPackageRepository, AdvertPackage>.Exist(_advertPackageRepository, request.Id)))
