@@ -12,6 +12,7 @@ namespace Billdeer.Business.Constants
     /// </summary>
     public static class Messages
     {
+        public static string Deactivated => "Deactivated";
         public static string Success => "Success";
         public static string NotFound => "NotFound";
         public static string UserAlreadyExists => "UserAlreadyExists";

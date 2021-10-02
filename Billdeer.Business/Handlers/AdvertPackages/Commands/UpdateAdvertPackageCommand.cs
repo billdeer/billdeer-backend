@@ -6,10 +6,6 @@ using Billdeer.Core.Utilities.ToolKit;
 using Billdeer.DataAccess.Abstract;
 using Billdeer.Entities.Concrete;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,7 +19,6 @@ namespace Billdeer.Business.Handlers.AdvertPackages.Commands
         public decimal Price { get; set; }
         public int DeliveryTime { get; set; }
         public int Revision { get; set; }
-
         public class UpdateAdvertPackageCommandHandler : IRequestHandler<UpdateAdvertPackageCommand, IDataResult<AdvertPackage>>
         {
             private readonly IAdvertPackageRepository _advertPackageRepository;
