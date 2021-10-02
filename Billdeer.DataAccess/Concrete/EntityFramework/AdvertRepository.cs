@@ -16,5 +16,6 @@ namespace Billdeer.DataAccess.Concrete.EntityFramework
         {
 
         }
+
     }
 }

@@ -16,5 +16,7 @@ namespace Billdeer.DataAccess.Concrete.EntityFramework
         {
 
         }
+
+        //:. Some joining must be add.
     }
 }

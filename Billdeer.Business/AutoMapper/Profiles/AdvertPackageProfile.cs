@@ -1,19 +1,16 @@
 ﻿using AutoMapper;
+using Billdeer.Business.Handlers.AdvertPackages.Commands;
 using Billdeer.Business.Handlers.Adverts.Commands;
 using Billdeer.Entities.Concrete;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Billdeer.Business.AutoMapper.Profiles
 {
-    public class AdvertProfile : Profile
+    public class AdvertPackageProfile : Profile
     {
-        public AdvertProfile()
+        public AdvertPackageProfile()
         {
-            CreateMap<CreateAdvertCommand, Advert>()
+            CreateMap<CreateAdvertPackageCommand, AdvertPackage>()
                .ForMember(
                    dest => dest.CreatedDate,
                    opt => opt.MapFrom(src => DateTime.Now))
@@ -24,10 +21,6 @@ namespace Billdeer.Business.AutoMapper.Profiles
                    dest => dest.IsDeleted,
                    opt => opt.MapFrom(src => false));
 
-            CreateMap<UpdateAdvertCommand, Advert>()
-               .ForMember(
-                   dest => dest.ModifiedDate,
-                   opt => opt.MapFrom(src => DateTime.Now));
         }
     }
 }

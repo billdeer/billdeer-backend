@@ -11,7 +11,6 @@ namespace Billdeer.Entities.Concrete
     public class AdvertPackage : EntityBase
     {
         public long AdvertId { get; set; }
-        public long PackagePropertyId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
