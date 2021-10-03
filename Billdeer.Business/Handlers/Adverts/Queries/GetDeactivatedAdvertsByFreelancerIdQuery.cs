@@ -12,29 +12,29 @@ using System.Threading.Tasks;
 
 namespace Billdeer.Business.Handlers.Adverts.Queries
 {
-    public class GetDeactivatedAdvertsByUserIdQuery : IRequest<IDataResult<IEnumerable<Advert>>>
+    public class GetDeactivatedAdvertsByFreelancerIdQuery : IRequest<IDataResult<IEnumerable<Advert>>>
     {
-        public long UserId { get; set; }
+        public long FreelancerId { get; set; }
 
-        public class GetDeactivatedAdvertsByUserIdQueryHandler : IRequestHandler<GetDeactivatedAdvertsByUserIdQuery, IDataResult<IEnumerable<Advert>>>
+        public class GetDeactivatedAdvertsByFreelancerIdQueryHandler : IRequestHandler<GetDeactivatedAdvertsByFreelancerIdQuery, IDataResult<IEnumerable<Advert>>>
         {
             private readonly IAdvertRepository _advertRepository;
-            private readonly IUserRepository _userRepository;
+            private readonly IFreelancerRepository _freelancerRepository;
 
-            public GetDeactivatedAdvertsByUserIdQueryHandler(IAdvertRepository advertRepository, IUserRepository userRepository)
+            public GetDeactivatedAdvertsByFreelancerIdQueryHandler(IAdvertRepository advertRepository, IFreelancerRepository freelancerRepository)
             {
                 _advertRepository = advertRepository;
-                _userRepository = userRepository;
+                _freelancerRepository = freelancerRepository;
             }
 
-            public async Task<IDataResult<IEnumerable<Advert>>> Handle(GetDeactivatedAdvertsByUserIdQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<Advert>>> Handle(GetDeactivatedAdvertsByFreelancerIdQuery request, CancellationToken cancellationToken)
             {
-                if (IfEngine.Engine(CheckEntities<IUserRepository, User>.Exist(_userRepository, request.UserId)))
+                if (IfEngine.Engine(await CheckEntities<IFreelancerRepository, Freelancer>.Exist(_freelancerRepository, request.FreelancerId)))
                 {
                     return new DataResult<IEnumerable<Advert>>(ResultStatus.Warning, Messages.NotFound);
                 }
 
-                var deactivatedAdverts = await _advertRepository.GetListAsync(x => x.UserId == request.UserId && x.IsActive == false && x.IsDeleted == false);
+                var deactivatedAdverts = await _advertRepository.GetListAsync(x => x.FreelancerId == request.FreelancerId && x.IsActive == false && x.IsDeleted == false);
 
                 if (deactivatedAdverts is null)
                 {

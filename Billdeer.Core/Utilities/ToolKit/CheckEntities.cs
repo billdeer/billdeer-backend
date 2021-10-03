@@ -12,9 +12,10 @@ namespace Billdeer.Core.Utilities.ToolKit
         where T : class, IEntity, new()
         where TRepository : IEntityRepository<T>
     {
-        public static bool Exist(TRepository repository, long Id)
+        public static async Task<bool> Exist(TRepository repository, long Id)
         {
-            return repository.Queryable(x => x.Id == Id).Any();
+            var result = await repository.QueryableAsync(x => x.Id == Id);
+            return result.Any();
         }
     }
 }

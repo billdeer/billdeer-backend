@@ -25,19 +25,17 @@ namespace Billdeer.Business.Handlers.Adverts.Commands
         public class DeleteAdvertCommandHandler : IRequestHandler<DeleteAdvertCommand, IResult>
         {
             private readonly IAdvertRepository _advertRepository;
-            private readonly IMapper _mapper;
 
-            public DeleteAdvertCommandHandler(IAdvertRepository advertRepository, IMapper mapper)
+            public DeleteAdvertCommandHandler(IAdvertRepository advertRepository)
             {
                 _advertRepository = advertRepository;
-                _mapper = mapper;
             }
 
             [RemoveCacheAspect("Get")]
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(DeleteAdvertCommand request, CancellationToken cancellationToken)
             {
-                if (!IfEngine.Engine(CheckEntities<IAdvertRepository, Advert>.Exist(_advertRepository, request.Id)))
+                if (!IfEngine.Engine(await CheckEntities<IAdvertRepository, Advert>.Exist(_advertRepository, request.Id)))
                 {
                     return new Result(ResultStatus.Warning, Messages.NotFound);
                 }

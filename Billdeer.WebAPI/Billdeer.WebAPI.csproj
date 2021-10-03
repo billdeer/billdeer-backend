@@ -26,12 +26,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Billdeer.Business\Billdeer.Business.csproj" />
-    <ProjectReference Include="..\Billdeer.Entities\Billdeer.Entities.csproj" />
+    <Folder Include="logs\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="logs\" />
+    <ProjectReference Include="..\Billdeer.Business\Billdeer.Business.csproj" />
+    <ProjectReference Include="..\Billdeer.Entities\Billdeer.Entities.csproj" />
   </ItemGroup>
 
 </Project>

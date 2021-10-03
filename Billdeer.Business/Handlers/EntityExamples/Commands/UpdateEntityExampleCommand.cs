@@ -39,7 +39,7 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
             {
                 var entityExample = await _entityExampleRepository.GetAsync(x => x.Id == request.Id);
 
-                if (IfEngine.Engine(CheckEntities<IEntityExampleRepository, EntityExample>.Exist(_entityExampleRepository, request.Id)))
+                if (IfEngine.Engine(await CheckEntities<IEntityExampleRepository, EntityExample>.Exist(_entityExampleRepository, request.Id)))
                 {
                     return new DataResult<EntityExampleDto>(ResultStatus.Warning, Messages.NotFound);
                 }

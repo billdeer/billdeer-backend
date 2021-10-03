@@ -15,30 +15,30 @@ using System.Threading.Tasks;
 
 namespace Billdeer.Business.Handlers.Adverts.Queries
 {
-    public class GetDeletedAdvertsByUserIdQuery : IRequest<IDataResult<IEnumerable<Advert>>>
+    public class GetDeletedAdvertsByFreelancerIdQuery : IRequest<IDataResult<IEnumerable<Advert>>>
     {
-        public long UserId { get; set; }
-        public class GetDeletedAdvertsByUserIdQueryHandler : IRequestHandler<GetDeletedAdvertsByUserIdQuery, IDataResult<IEnumerable<Advert>>>
+        public long FreelancerId { get; set; }
+        public class GetDeletedAdvertsByFreelancerIdQueryHandler : IRequestHandler<GetDeletedAdvertsByFreelancerIdQuery, IDataResult<IEnumerable<Advert>>>
         {
             private readonly IAdvertRepository _advertRepository;
-            private readonly IUserRepository _userRepository;
+            private readonly IFreelancerRepository _freelancerRepository;
 
-            public GetDeletedAdvertsByUserIdQueryHandler(IAdvertRepository advertRepository, IUserRepository userRepository)
+            public GetDeletedAdvertsByFreelancerIdQueryHandler(IAdvertRepository advertRepository, IFreelancerRepository freelancerRepository)
             {
                 _advertRepository = advertRepository;
-                _userRepository = userRepository;
+                _freelancerRepository = freelancerRepository;
             }
 
             [CacheAspect]
             [LogAspect(typeof(FileLogger))]
-            public async Task<IDataResult<IEnumerable<Advert>>> Handle(GetDeletedAdvertsByUserIdQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<Advert>>> Handle(GetDeletedAdvertsByFreelancerIdQuery request, CancellationToken cancellationToken)
             {
-                if (!IfEngine.Engine(CheckEntities<IUserRepository, User>.Exist(_userRepository, request.UserId)))
+                if (!IfEngine.Engine(await CheckEntities<IFreelancerRepository, Freelancer>.Exist(_freelancerRepository, request.FreelancerId)))
                 {
                     return new DataResult<IEnumerable<Advert>>(ResultStatus.Warning, Messages.UserNotFound);
                 }
 
-                var advert = await _advertRepository.GetListAsync(x => x.UserId == request.UserId && x.IsActive == false && x.IsDeleted == true);
+                var advert = await _advertRepository.GetListAsync(x => x.FreelancerId == request.FreelancerId && x.IsActive == false && x.IsDeleted == true);
 
                 if (advert is null)
                 {

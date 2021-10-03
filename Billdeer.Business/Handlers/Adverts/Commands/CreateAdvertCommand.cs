@@ -21,19 +21,19 @@ namespace Billdeer.Business.Handlers.Adverts.Commands
 {
     public class CreateAdvertCommand : IRequest<IDataResult<Advert>>
     {
-        public long UserId { get; set; }
+        public long FreelancerId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public class CreateAdvertCommandHandler : IRequestHandler<CreateAdvertCommand, IDataResult<Advert>>
         {
             private readonly IAdvertRepository _advertRepository;
-            private readonly IUserRepository _userRepository;
+            private readonly IFreelancerRepository _freelancerRepository;
             private readonly IMapper _mapper;
 
-            public CreateAdvertCommandHandler(IAdvertRepository advertRepository, IUserRepository userRepository, IMapper mapper)
+            public CreateAdvertCommandHandler(IAdvertRepository advertRepository, IFreelancerRepository freelancerRepository, IMapper mapper)
             {
                 _advertRepository = advertRepository;
-                _userRepository = userRepository;
+                _freelancerRepository = freelancerRepository;
                 _mapper = mapper;
             }
 
@@ -41,9 +41,9 @@ namespace Billdeer.Business.Handlers.Adverts.Commands
             [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<Advert>> Handle(CreateAdvertCommand request, CancellationToken cancellationToken)
             {
-                if (!IfEngine.Engine(CheckEntities<IUserRepository, User>.Exist(_userRepository, request.UserId)))
+                if (!IfEngine.Engine(await CheckEntities<IFreelancerRepository, Freelancer>.Exist(_freelancerRepository, request.FreelancerId)))
                 {
-                    return new DataResult<Advert>(ResultStatus.Warning, Messages.UserNotFound);
+                    return new DataResult<Advert>(ResultStatus.Warning, Messages.NotFound);
                 }
 
                 var addedAdvert = _mapper.Map<Advert>(request);

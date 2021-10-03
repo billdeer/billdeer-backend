@@ -34,7 +34,7 @@ namespace Billdeer.Business.Handlers.Adverts.Queries
             [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<Advert>> Handle(GetAdvertQuery request, CancellationToken cancellationToken)
             {
-                if (!IfEngine.Engine(CheckEntities<IAdvertRepository, Advert>.Exist(_advertRepository, request.Id)))
+                if (!IfEngine.Engine(await CheckEntities<IAdvertRepository, Advert>.Exist(_advertRepository, request.Id)))
                 {
                     return new DataResult<Advert>(ResultStatus.Warning, Messages.NotFound);
                 }
