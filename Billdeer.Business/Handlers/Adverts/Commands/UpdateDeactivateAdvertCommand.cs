@@ -37,7 +37,8 @@ namespace Billdeer.Business.Handlers.Adverts.Commands
             [LogAspect(typeof(FileLogger))]
             public async Task<IResult> Handle(UpdateDeactivateAdvertCommand request, CancellationToken cancellationToken)
             {
-                if (!IfEngine.Engine(await CheckEntities<IAdvertRepository, Advert>.Exist(_advertRepository, request.Id)))
+                bool funcs = CheckEntities<IAdvertRepository, Advert>.Exist(_advertRepository, request.Id);
+                if (!IfEngine.Engine(funcs))
                 {
                     return new Result(ResultStatus.Warning, Messages.NotFound);
                 }

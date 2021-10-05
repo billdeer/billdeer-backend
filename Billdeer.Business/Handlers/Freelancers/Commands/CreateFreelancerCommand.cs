@@ -37,8 +37,8 @@ namespace Billdeer.Business.Handlers.Freelancers.Commands
             {
                 if (!IfEngine
                     .Engine(
-                        await CheckEntities<IUserRepository, User>.Exist(_userRepository, request.UserId),
-                        await CheckAlreadyFreelancer(request.UserId)
+                        CheckEntities<IUserRepository, User>.Exist(_userRepository, request.UserId),
+                        CheckAlreadyFreelancer(request.UserId)
                         )
                     )
                 {
@@ -53,9 +53,9 @@ namespace Billdeer.Business.Handlers.Freelancers.Commands
                 return new DataResult<Freelancer>(freelancer, ResultStatus.Success, Messages.Added);
             }
 
-            private async Task<bool> CheckAlreadyFreelancer(long userId)
+            private bool CheckAlreadyFreelancer(long userId)
             {
-                var result = await _freelancerRepository.QueryableAsync(x => x.UserId == userId && x.IsActive == true && x.IsDeleted == false);
+                var result = _freelancerRepository.Queryable(x => x.UserId == userId && x.IsActive == true && x.IsDeleted == false);
                 return result.Any();
             }
 

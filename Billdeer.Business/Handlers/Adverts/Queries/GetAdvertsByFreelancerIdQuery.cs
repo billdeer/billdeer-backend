@@ -40,7 +40,8 @@ namespace Billdeer.Business.Handlers.Adverts.Queries
             {
                 var user = await _freelancerRepository.GetAsync(x => x.Id == request.FreelancerId);
 
-                if (!IfEngine.Engine(await CheckEntities<IFreelancerRepository, Freelancer>.Exist(_freelancerRepository, request.FreelancerId)))
+                bool funcs = CheckEntities<IFreelancerRepository, Freelancer>.Exist(_freelancerRepository, request.FreelancerId);
+                if (!IfEngine.Engine(funcs))
                 {
                     return new DataResult<IEnumerable<Advert>>(ResultStatus.Warning, Messages.NotFound);
                 }

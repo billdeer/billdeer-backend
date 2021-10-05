@@ -33,7 +33,8 @@ namespace Billdeer.Business.Handlers.Adverts.Queries
             [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<IEnumerable<Advert>>> Handle(GetDeletedAdvertsByFreelancerIdQuery request, CancellationToken cancellationToken)
             {
-                if (!IfEngine.Engine(await CheckEntities<IFreelancerRepository, Freelancer>.Exist(_freelancerRepository, request.FreelancerId)))
+                bool func = CheckEntities<IFreelancerRepository, Freelancer>.Exist(_freelancerRepository, request.FreelancerId);
+                if (!IfEngine.Engine(func))
                 {
                     return new DataResult<IEnumerable<Advert>>(ResultStatus.Warning, Messages.UserNotFound);
                 }

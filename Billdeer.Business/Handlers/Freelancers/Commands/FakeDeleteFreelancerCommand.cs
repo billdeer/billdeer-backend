@@ -29,7 +29,7 @@ namespace Billdeer.Business.Handlers.Freelancers.Commands
 
             public async Task<IResult> Handle(FakeDeleteFreelancerCommand request, CancellationToken cancellationToken)
             {
-                if (!IfEngine.Engine(await CheckEntities<IFreelancerRepository, Freelancer>.Exist(_freelancerRepository, request.Id)))
+                if (!IfEngine.Engine(CheckEntities<IFreelancerRepository, Freelancer>.Exist(_freelancerRepository, request.Id)))
                 {
                     return new Result(ResultStatus.Warning, Messages.NotFound);
                 }
@@ -44,6 +44,9 @@ namespace Billdeer.Business.Handlers.Freelancers.Commands
                 freelancer.DeletedDate = DateTime.Now;
                 freelancer.IsActive = false;
                 freelancer.IsDeleted = true;
+
+                _freelancerRepository.Update(freelancer);
+                await _freelancerRepository.SaveChangesAsync();
 
                 return new Result(ResultStatus.Success, Messages.Success);
             }

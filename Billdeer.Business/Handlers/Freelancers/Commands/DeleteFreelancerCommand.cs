@@ -29,12 +29,12 @@ namespace Billdeer.Business.Handlers.Freelancers.Commands
 
             public async Task<IResult> Handle(DeleteFreelancerCommand request, CancellationToken cancellationToken)
             {
-                if (!IfEngine.Engine(await CheckEntities<IFreelancerRepository, Freelancer>.Exist(_freelancerRepository, request.Id)))
+                if (!IfEngine.Engine(CheckEntities<IFreelancerRepository, Freelancer>.Exist(_freelancerRepository, request.Id)))
                 {
                     return new Result(ResultStatus.Warning, Messages.NotFound);
                 }
 
-                var freelancer = await _freelancerRepository.GetAsync(x => x.Id == request.Id && x.IsActive == true && x.IsDeleted == false);
+                var freelancer = await _freelancerRepository.GetAsync(x => x.Id == request.Id);
 
                 if (freelancer is null)
                 {

@@ -24,6 +24,8 @@ namespace Billdeer.Business.DependencyResolvers.Autofac
             builder.RegisterType<LogRepository>().As<ILogRepository>().SingleInstance();
             builder.RegisterType<UserRepository>().As<IUserRepository>().SingleInstance();
             builder.RegisterType<AdvertRepository>().As<IAdvertRepository>().SingleInstance();
+            builder.RegisterType<AdvertPackageRepository>().As<IAdvertPackageRepository>().SingleInstance();
+            builder.RegisterType<FreelancerRepository>().As<IFreelancerRepository>().SingleInstance();
             builder.RegisterType<OperationClaimRepository>().As<IOperationClaimRepository>().SingleInstance();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();
 

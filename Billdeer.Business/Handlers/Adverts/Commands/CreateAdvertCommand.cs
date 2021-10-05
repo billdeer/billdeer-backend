@@ -41,7 +41,8 @@ namespace Billdeer.Business.Handlers.Adverts.Commands
             [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<Advert>> Handle(CreateAdvertCommand request, CancellationToken cancellationToken)
             {
-                if (!IfEngine.Engine(await CheckEntities<IFreelancerRepository, Freelancer>.Exist(_freelancerRepository, request.FreelancerId)))
+                bool funcs = CheckEntities<IFreelancerRepository, Freelancer>.Exist(_freelancerRepository, request.FreelancerId);
+                if (!IfEngine.Engine(funcs))
                 {
                     return new DataResult<Advert>(ResultStatus.Warning, Messages.NotFound);
                 }

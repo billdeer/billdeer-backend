@@ -30,7 +30,8 @@ namespace Billdeer.Business.Handlers.AdvertPackages.Queries
 
             public async Task<IDataResult<AdvertPackage>> Handle(GetAdvertPackageQuery request, CancellationToken cancellationToken)
             {
-                if (!IfEngine.Engine(await CheckEntities<IAdvertPackageRepository, AdvertPackage>.Exist(_advertPackageRepository, request.Id)))
+                bool funcs = CheckEntities<IAdvertPackageRepository, AdvertPackage>.Exist(_advertPackageRepository, request.Id);
+                if (!IfEngine.Engine(funcs))
                 {
                     return new DataResult<AdvertPackage>(ResultStatus.Warning, Messages.NotFound);
                 }

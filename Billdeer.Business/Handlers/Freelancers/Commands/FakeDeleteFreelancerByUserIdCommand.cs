@@ -1,4 +1,5 @@
 ﻿using Billdeer.Business.Constants;
+using Billdeer.Core.Entities.Concrete;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Utilities.Results.ComplexTypes;
 using Billdeer.Core.Utilities.ToolKit;
@@ -14,41 +15,43 @@ using System.Threading.Tasks;
 
 namespace Billdeer.Business.Handlers.Freelancers.Commands
 {
-    public class UpdateDeactivatedFreelancerCommand : IRequest<IResult>
+    public class FakeDeleteFreelancerByUserIdCommand : IRequest<IResult>
     {
-        public long Id { get; set; }
+        public long UserId { get; set; }
 
-        public class UpdateDeactivatedFreelancerCommandHandler : IRequestHandler<UpdateDeactivatedFreelancerCommand, IResult>
+        public class FakeDeleteFreelancerByUserIdCommandHandler : IRequestHandler<FakeDeleteFreelancerByUserIdCommand, IResult>
         {
             private readonly IFreelancerRepository _freelancerRepository;
+            private readonly IUserRepository _userRepository;
 
-            public UpdateDeactivatedFreelancerCommandHandler(IFreelancerRepository freelancerRepository)
+            public FakeDeleteFreelancerByUserIdCommandHandler(IFreelancerRepository freelancerRepository, IUserRepository userRepository)
             {
                 _freelancerRepository = freelancerRepository;
+                _userRepository = userRepository;
             }
 
-            public async Task<IResult> Handle(UpdateDeactivatedFreelancerCommand request, CancellationToken cancellationToken)
+            public async Task<IResult> Handle(FakeDeleteFreelancerByUserIdCommand request, CancellationToken cancellationToken)
             {
-                if (!IfEngine.Engine(CheckEntities<IFreelancerRepository, Freelancer>.Exist(_freelancerRepository, request.Id)))
+                if (!IfEngine.Engine(CheckEntities<IUserRepository, User>.Exist(_userRepository, request.UserId)))
                 {
-
                     return new Result(ResultStatus.Warning, Messages.NotFound);
                 }
 
-                var freelancer = await _freelancerRepository.GetAsync(x => x.Id == request.Id && x.IsActive == true && x.IsDeleted == false);
+                var freelancer = await _freelancerRepository.GetAsync(x => x.UserId == request.UserId);
 
                 if (freelancer is null)
                 {
                     return new Result(ResultStatus.Warning, Messages.NotFound);
                 }
 
+                freelancer.DeletedDate = DateTime.Now;
                 freelancer.IsActive = false;
-                freelancer.ModifiedDate = DateTime.Now;
+                freelancer.IsDeleted = true;
 
                 _freelancerRepository.Update(freelancer);
                 await _freelancerRepository.SaveChangesAsync();
 
-                return new Result(ResultStatus.Success, Messages.Deactivated);
+                return new Result(ResultStatus.Success, Messages.Success);
             }
         }
     }

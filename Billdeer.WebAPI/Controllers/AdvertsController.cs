@@ -91,14 +91,22 @@ namespace Billdeer.WebAPI.Controllers
         public async Task<IActionResult> AddAsync([FromBody] CreateAdvertCommand request)
         {
             var result = await Mediator.Send(request);
-            return SwitchMethod<Advert, IDataResult<Advert>>(result, "Adverts", "Add");
+            return SwitchMethod<Advert, IDataResult<Advert>>(result, "Adverts", "AddAsync");
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateAsync([FromBody] UpdateAdvertCommand request)
         {
             var result = await Mediator.Send(request);
-            return SwitchMethod<Advert, IDataResult<Advert>>(result, "Adverts", "Update");
+            return SwitchMethod<Advert, IDataResult<Advert>>(result, "Adverts", "UpdateAsync");
+        }
+
+
+        [HttpPut("Deactivated")]
+        public async Task<IActionResult> UpdateDeactivatedAsync([FromBody] UpdateDeactivateAdvertCommand request)
+        {
+            var result = await Mediator.Send(request);
+            return SwitchMethod(result, "Adverts", "UpdateDeactivatedAsync");
         }
 
         [HttpDelete]

@@ -27,7 +27,8 @@ namespace Billdeer.Business.Handlers.AdvertPackages.Commands
             }
             public async Task<IResult> Handle(DeleteAdvertPackageCommand request, CancellationToken cancellationToken)
             {
-                if (!IfEngine.Engine(await CheckEntities<IAdvertPackageRepository, AdvertPackage>.Exist(_advertPackageRepository, request.Id)))
+                bool funcs = CheckEntities<IAdvertPackageRepository, AdvertPackage>.Exist(_advertPackageRepository, request.Id);
+                if (!IfEngine.Engine(funcs))
                 {
                     return new Result(ResultStatus.Warning, Messages.NotFound);
                 }

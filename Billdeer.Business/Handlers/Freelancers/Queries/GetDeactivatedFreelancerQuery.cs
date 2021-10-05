@@ -29,7 +29,7 @@ namespace Billdeer.Business.Handlers.Freelancers.Queries
 
             public async Task<IDataResult<Freelancer>> Handle(GetDeactivatedFreelancerQuery request, CancellationToken cancellationToken)
             {
-                if (IfEngine.Engine(await CheckEntities<IFreelancerRepository, Freelancer>.Exist(_freelancerRepository, request.Id)))
+                if (!IfEngine.Engine(CheckEntities<IFreelancerRepository, Freelancer>.Exist(_freelancerRepository, request.Id)))
                 {
                     return new DataResult<Freelancer>(ResultStatus.Warning, Messages.NotFound);
                 }

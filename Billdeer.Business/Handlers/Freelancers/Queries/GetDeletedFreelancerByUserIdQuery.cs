@@ -32,7 +32,7 @@ namespace Billdeer.Business.Handlers.Freelancers.Queries
 
             public async Task<IDataResult<Freelancer>> Handle(GetDeletedFreelancerByUserIdQuery request, CancellationToken cancellationToken)
             {
-                if (IfEngine.Engine(await CheckEntities<IUserRepository, User>.Exist(_userRepository, request.UserId)))
+                if (!IfEngine.Engine(CheckEntities<IUserRepository, User>.Exist(_userRepository, request.UserId)))
                 {
                     return new DataResult<Freelancer>(ResultStatus.Warning, Messages.UserNotFound);
                 }

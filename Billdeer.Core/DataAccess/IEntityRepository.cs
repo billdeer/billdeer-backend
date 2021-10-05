@@ -25,9 +25,9 @@ namespace Billdeer.Core.DataAccess
         Task<IEnumerable<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> expression = null);
 
         IQueryable<TEntity> Queryable(Expression<Func<TEntity, bool>> expression);
-        Task<IQueryable<TEntity>> QueryableAsync(Expression<Func<TEntity, bool>> expression);
+        //Task<IQueryable<TEntity>> QueryableAsync(Expression<Func<TEntity, bool>> expression);
 
-        int SaveChanges(); // UnitOfWork Patterni ayrı klasow olmadan repositoryde
+        int SaveChanges();
         Task<int> SaveChangesAsync();
 
         int GetCount(Expression<Func<TEntity, bool>> expression = null);
