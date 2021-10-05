@@ -11,7 +11,7 @@ namespace Billdeer.Entities.Concrete
 {
     public class Advert : EntityBase
     {
-        public long UserId { get; set; }
+        public long FreelancerId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
     }

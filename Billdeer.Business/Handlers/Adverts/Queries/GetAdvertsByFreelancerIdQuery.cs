@@ -19,37 +19,34 @@ using System.Threading.Tasks;
 
 namespace Billdeer.Business.Handlers.Adverts.Queries
 {
-    public class GetAdvertsByUserIdQuery : IRequest<IDataResult<IEnumerable<Advert>>>
+    public class GetAdvertsByFreelancerIdQuery : IRequest<IDataResult<IEnumerable<Advert>>>
     {
-        public long UserId { get; set; }
+        public long FreelancerId { get; set; }
 
-        public class GetAdvertsByUserIdQueryHandler : IRequestHandler<GetAdvertsByUserIdQuery, IDataResult<IEnumerable<Advert>>>
+        public class GetAdvertsByFreelancerIdQueryHandler : IRequestHandler<GetAdvertsByFreelancerIdQuery, IDataResult<IEnumerable<Advert>>>
         {
             private readonly IAdvertRepository _advertRepository;
-            private readonly IUserRepository _userRepository;
-            private readonly IMailService _mailService;
+            private readonly IFreelancerRepository _freelancerRepository;
 
-            public GetAdvertsByUserIdQueryHandler(IAdvertRepository advertRepository, IUserRepository userRepository, IMailService mailService)
+            public GetAdvertsByFreelancerIdQueryHandler(IAdvertRepository advertRepository, IFreelancerRepository freelancerRepository)
             {
                 _advertRepository = advertRepository;
-                _userRepository = userRepository;
-                _mailService = mailService;
+                _freelancerRepository = freelancerRepository;
             }
 
             [CacheAspect]
             [LogAspect(typeof(FileLogger))]
-            public async Task<IDataResult<IEnumerable<Advert>>> Handle(GetAdvertsByUserIdQuery request, CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<Advert>>> Handle(GetAdvertsByFreelancerIdQuery request, CancellationToken cancellationToken)
             {
-                var user = await _userRepository.GetAsync(x => x.Id == request.UserId);
+                var user = await _freelancerRepository.GetAsync(x => x.Id == request.FreelancerId);
 
-                EmailSender.Send(user, _mailService);
-
-                if (!IfEngine.Engine(CheckEntities<IUserRepository, User>.Exist(_userRepository, request.UserId)))
+                bool funcs = CheckEntities<IFreelancerRepository, Freelancer>.Exist(_freelancerRepository, request.FreelancerId);
+                if (!IfEngine.Engine(funcs))
                 {
-                    return new DataResult<IEnumerable<Advert>>(ResultStatus.Warning, Messages.UserNotFound);
+                    return new DataResult<IEnumerable<Advert>>(ResultStatus.Warning, Messages.NotFound);
                 }
 
-                var advert = await _advertRepository.GetListAsync(x => x.UserId == request.UserId && x.IsActive == true && x.IsDeleted == false);
+                var advert = await _advertRepository.GetListAsync(x => x.FreelancerId == request.FreelancerId && x.IsActive == true && x.IsDeleted == false);
 
                 if (advert is null)
                 {

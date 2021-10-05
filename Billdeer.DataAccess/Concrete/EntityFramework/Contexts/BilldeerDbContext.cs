@@ -22,6 +22,7 @@ namespace Billdeer.DataAccess.Concrete.EntityFramework.Contexts
         //}
         public DbSet<EntityExample> Examples { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Freelancer> Freelancers { get; set; }
         public DbSet<OperationClaim> OperationClaims { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
         public DbSet<Log> Logs { get; set; }

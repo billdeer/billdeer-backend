@@ -23,14 +23,6 @@ namespace Billdeer.WebAPI.Controllers
             return SwitchMethod<Advert, IDataResult<Advert>>(result, "Adverts", "Get");
         }
 
-        [HttpGet("deleted/{id}")]
-        public async Task<IActionResult> GetDeletedById(long id)
-        {
-            var query = new GetDeletedAdvertQuery() { Id = id};
-            var result = await Mediator.Send(query);
-            return SwitchMethod<Advert, IDataResult<Advert>>(result, "Adverts", "GetAllDeletedById");
-        }
-
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -39,15 +31,23 @@ namespace Billdeer.WebAPI.Controllers
             return SwitchMethod<IEnumerable<Advert>, IDataResult<IEnumerable<Advert>>>(result, "Adverts", "GetAll");
         }
 
-        [HttpGet("u{userId}")]
-        public async Task<IActionResult> GetAllByUserId(long userId)
+        [HttpGet("f{freelancerId}")]
+        public async Task<IActionResult> GetAllByFreelancerId(long freelancerId)
         {
-            var query = new GetAdvertsByUserIdQuery() { UserId = userId};
+            var query = new GetAdvertsByFreelancerIdQuery() { FreelancerId = freelancerId };
             var result = await Mediator.Send(query);
-            return SwitchMethod<IEnumerable<Advert>, IDataResult<IEnumerable<Advert>>>(result, "Adverts", "GetAllByUserId");
+            return SwitchMethod<IEnumerable<Advert>, IDataResult<IEnumerable<Advert>>>(result, "Adverts", "GetAllByFreelancerId");
         }
 
-        [HttpGet("deleted")]
+        [HttpGet("deleted/{id}")]
+        public async Task<IActionResult> GetDeletedById(long id)
+        {
+            var query = new GetDeletedAdvertQuery() { Id = id};
+            var result = await Mediator.Send(query);
+            return SwitchMethod<Advert, IDataResult<Advert>>(result, "Adverts", "GetAllDeletedById");
+        }
+
+        [HttpGet("deleteds")]
         public async Task<IActionResult> GetAllDeleted()
         {
             var query = new GetDeletedAdvertsQuery();
@@ -55,26 +55,58 @@ namespace Billdeer.WebAPI.Controllers
             return SwitchMethod<IEnumerable<Advert>, IDataResult<IEnumerable<Advert>>>(result, "Adverts", "GetAllDeleted");
         }
 
-        [HttpGet("deleted/u{userId}")]
-        public async Task<IActionResult> GetAllDeletedByUserId(long userId)
+        [HttpGet("deleted/f{freelancerId}")]
+        public async Task<IActionResult> GetAllDeletedByFreelancerId(long freelancerId)
         {
-            var query = new GetDeletedAdvertsByUserIdQuery() { UserId = userId};
+            var query = new GetDeletedAdvertsByFreelancerIdQuery() { FreelancerId = freelancerId};
             var result = await Mediator.Send(query);
-            return SwitchMethod<IEnumerable<Advert>, IDataResult<IEnumerable<Advert>>>(result, "Adverts", "GetAllDeletedByUserId");
+            return SwitchMethod<IEnumerable<Advert>, IDataResult<IEnumerable<Advert>>>(result, "Adverts", "GetAllDeletedByFreelancerId");
+        }
+
+        [HttpGet("deactivated/{id}")]
+        public async Task<IActionResult> GetDeactivatedById(long id)
+        {
+            var query = new GetDeactivatedAdvertQuery() { Id = id};
+            var result = await Mediator.Send(query);
+            return SwitchMethod<Advert, IDataResult<Advert>>(result, "Adverts", "GetDeactivatedById");
+        }
+
+        [HttpGet("deactivateds")]
+        public async Task<IActionResult> GetAllDeactivated()
+        {
+            var query = new GetDeactivatedAdvertsQuery();
+            var result = await Mediator.Send(query);
+            return SwitchMethod<IEnumerable<Advert>, IDataResult<IEnumerable<Advert>>>(result, "Adverts", "GetAllDeactivated");
+        }
+
+        [HttpGet("deactivated/f{freelancerId}")]
+        public async Task<IActionResult> GetAllDeactivatedByFreelancerId(long freelancerId)
+        {
+            var query = new GetDeactivatedAdvertsByFreelancerIdQuery() { FreelancerId = freelancerId};
+            var result = await Mediator.Send(query);
+            return SwitchMethod<IEnumerable<Advert>, IDataResult<IEnumerable<Advert>>>(result, "Adverts", "GetAllDeactivatedByFreelancerId");
         }
 
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromBody] CreateAdvertCommand request)
         {
             var result = await Mediator.Send(request);
-            return SwitchMethod<Advert, IDataResult<Advert>>(result, "Adverts", "Add");
+            return SwitchMethod<Advert, IDataResult<Advert>>(result, "Adverts", "AddAsync");
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateAsync([FromBody] UpdateAdvertCommand request)
         {
             var result = await Mediator.Send(request);
-            return SwitchMethod<Advert, IDataResult<Advert>>(result, "Adverts", "Update");
+            return SwitchMethod<Advert, IDataResult<Advert>>(result, "Adverts", "UpdateAsync");
+        }
+
+
+        [HttpPut("Deactivated")]
+        public async Task<IActionResult> UpdateDeactivatedAsync([FromBody] UpdateDeactivateAdvertCommand request)
+        {
+            var result = await Mediator.Send(request);
+            return SwitchMethod(result, "Adverts", "UpdateDeactivatedAsync");
         }
 
         [HttpDelete]

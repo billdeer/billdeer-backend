@@ -14,7 +14,8 @@ namespace Billdeer.Core.Utilities.ToolKit
     {
         public static bool Exist(TRepository repository, long Id)
         {
-            return repository.Queryable(x => x.Id == Id).Any();
+            var result = repository.Queryable(x => x.Id == Id);
+            return result.Any();
         }
     }
 }
