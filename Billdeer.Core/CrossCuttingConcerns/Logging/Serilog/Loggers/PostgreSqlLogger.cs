@@ -17,9 +17,7 @@ namespace Billdeer.Core.CrossCuttingConcerns.Logging.Serilog.Loggers
         {
             var configuration = ServiceTool.ServiceProvider.GetService<IConfiguration>();
 
-            var logConfig = configuration.GetSection("SeriLogConfigurations:PostgreConfiguration")
-                                .Get<PostgreConfiguration>() ??
-                            throw new Exception(SerilogMessages.NullOptionsMessage);
+            var logConfig = configuration.GetSection("SeriLogConfigurations:PostgreConfiguration").Get<PostgreConfiguration>() ?? throw new Exception(SerilogMessages.NullOptionsMessage);
 
             IDictionary<string, ColumnWriterBase> columnWriters = new Dictionary<string, ColumnWriterBase>
             {
@@ -29,9 +27,7 @@ namespace Billdeer.Core.CrossCuttingConcerns.Logging.Serilog.Loggers
                 { "Exception", new ExceptionColumnWriter(NpgsqlDbType.Text) },
             };
 
-            var seriLogConfig = new LoggerConfiguration()
-                .WriteTo.PostgreSQL(connectionString: logConfig.ConnectionString, tableName: "Logs", columnWriters, needAutoCreateTable: false, useCopy: false)
-                .CreateLogger();
+            var seriLogConfig = new LoggerConfiguration().WriteTo.PostgreSQL(connectionString: logConfig.ConnectionString, tableName: "Logs", columnWriters, needAutoCreateTable: true).CreateLogger();
             Logger = seriLogConfig;
         }
     }

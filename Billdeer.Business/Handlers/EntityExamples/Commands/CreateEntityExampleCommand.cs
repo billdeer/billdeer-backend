@@ -35,7 +35,7 @@ namespace Billdeer.Business.Handlers.EntityExamples.Commands
             [ValidationAspect(typeof(CreateEntityExampleValidator), Priority = 1)]
             [RemoveCacheAspect("Get")]
             //[SecuredOperation("master", Priority = 1)]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IDataResult<EntityExampleDto>> Handle(CreateEntityExampleCommand request, CancellationToken cancellationToken)
             {
                 var entity = await _entityExampleRepository.GetAsync(x => x.Name == request.Name);

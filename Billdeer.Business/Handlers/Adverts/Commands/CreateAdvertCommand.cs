@@ -38,7 +38,7 @@ namespace Billdeer.Business.Handlers.Adverts.Commands
             }
 
             [RemoveCacheAspect("Get")]
-            [LogAspect(typeof(FileLogger))]
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IDataResult<Advert>> Handle(CreateAdvertCommand request, CancellationToken cancellationToken)
             {
                 bool funcs = CheckEntities<IFreelancerRepository, Freelancer>.Exist(_freelancerRepository, request.FreelancerId);

@@ -29,7 +29,7 @@ namespace Billdeer.Business.Handlers.AdvertPackages.Queries
             public async Task<IDataResult<IEnumerable<AdvertPackage>>> Handle(GetDeletedAdvertPackagesByAdvertIdQuery request, CancellationToken cancellationToken)
             {
                 bool funcs = CheckEntities<IAdvertRepository, Advert>.Exist(_advertRepository, request.AdvertId);
-                if (IfEngine.Engine(funcs))
+                if (!IfEngine.Engine(funcs))
                 {
                     return new DataResult<IEnumerable<AdvertPackage>>(ResultStatus.Warning, Messages.NotFound);
                 }

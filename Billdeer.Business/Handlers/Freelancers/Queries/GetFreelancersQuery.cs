@@ -1,4 +1,6 @@
 ﻿using Billdeer.Business.Constants;
+using Billdeer.Core.Aspects.Autofac.Logging;
+using Billdeer.Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Utilities.Results.ComplexTypes;
 using Billdeer.Core.Utilities.ToolKit;
@@ -26,6 +28,7 @@ namespace Billdeer.Business.Handlers.Freelancers.Queries
                 _freelancerRepository = freelancerRepository;
             }
 
+            [LogAspect(typeof(PostgreSqlLogger))]
             public async Task<IDataResult<IEnumerable<Freelancer>>> Handle(GetFreelancersQuery request, CancellationToken cancellationToken)
             {
                 var freelancers = await _freelancerRepository.GetListAsync(x => x.IsActive == true && x.IsDeleted == false);
