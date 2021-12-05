@@ -24,8 +24,6 @@ namespace Billdeer.Business.Handlers.Authorizations.Commands
     {
         public string Email { get; set; }
         public string Password { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
         public string Username { get; set; }
 
         public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, IResult>
@@ -54,11 +52,10 @@ namespace Billdeer.Business.Handlers.Authorizations.Commands
                 {
                     Email = request.Email,
 
-                    FirstName = request.FirstName,
-                    LastName = request.LastName,
                     PasswordHash = passwordHash,
                     PasswordSalt = passwordSalt,
                     Username = request.Username,
+                    CreatedDate = DateTime.Now,
                     Status = true
                 };
                 ////.

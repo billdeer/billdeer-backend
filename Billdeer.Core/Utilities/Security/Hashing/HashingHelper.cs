@@ -35,6 +35,5 @@ namespace Billdeer.Core.Utilities.Security.Hashing
             }
             return true;
         }
-
     }
 }

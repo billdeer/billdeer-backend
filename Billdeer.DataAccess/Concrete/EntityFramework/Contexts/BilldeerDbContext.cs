@@ -14,7 +14,8 @@ namespace Billdeer.DataAccess.Concrete.EntityFramework.Contexts
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(@"Host=localhost;Port=5432;Database=Billdeer;Username=postgres;Password=12345;");
+            optionsBuilder.UseNpgsql(@"Host=localhost;Port=5432;Database=Billdeer;Username=postgres;Password=12345;")
+                .UseSnakeCaseNamingConvention();
         }
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
