@@ -1,5 +1,6 @@
 ﻿using Billdeer.Business.Handlers.Authorizations.Commands;
 using Billdeer.Business.Handlers.Authorizations.Queries;
+using Billdeer.Core.Entities.Dtos.UserDtos;
 using Billdeer.Core.Utilities.Results;
 using Billdeer.Core.Utilities.Security.JWT;
 using Microsoft.AspNetCore.Authorization;
@@ -25,14 +26,13 @@ namespace Billdeer.WebAPI.Controllers
             return SwitchMethod(result, "Auth", "Register");
         }
 
-
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginUserQuery loginModel)
         {
             var result = await Mediator.Send(loginModel);
 
-            return SwitchMethod<AccessToken, IDataResult<AccessToken>>(result, "Auth", "Login");
+            return SwitchMethod<UserLoginResDto, IDataResult<UserLoginResDto>>(result, "Auth", "Login");
         }
     }
 }

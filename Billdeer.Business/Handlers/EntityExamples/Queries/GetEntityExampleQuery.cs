@@ -33,7 +33,7 @@ namespace Billdeer.Business.Handlers.EntityExamples.Queries
                 _mapper = mapper;
             }
 
-            [SecuredOperation("master", Priority = 1)]
+            //[SecuredOperation("master", Priority = 1)]
             [CacheAspect(60)]
             [LogAspect(typeof(FileLogger))]
             public async Task<IDataResult<EntityExampleDto>> Handle(GetEntityExampleQuery request, CancellationToken cancellationToken)
